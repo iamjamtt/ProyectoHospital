@@ -35,6 +35,10 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
         cargarComboFinanciador();
         cargarComboSexo();
         cargar2("");
+        bloquear();
+        btnActualizar.setEnabled(false);
+        btnGuardar.setEnabled(false);
+        btnCancelar.setEnabled(false);
     }
 
     void cargarComboFinanciador(){
@@ -66,8 +70,64 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
         txtDireccion.setText("");
         dateNacimiento.setDate(null);
         cboSexo.setSelectedIndex(-1);
-        cboFinanciador.setSelectedIndex(-1);
+        cboFinanciador.setSelectedIndex(0);
         txtDNI.requestFocus();
+    }
+    
+    void bloquear(){
+        txtDNI.setEnabled(false);
+        txtNombre.setEnabled(false);
+        txtPaterno.setEnabled(false);
+        txtMaterno.setEnabled(false);
+        txtHisClinica.setEnabled(false);
+        txtDireccion.setEnabled(false);
+        dateNacimiento.setEnabled(false);
+        cboSexo.setEnabled(false);
+        cboFinanciador.setEnabled(false);
+    }
+    
+    void desbloquear(){
+        txtDNI.setEnabled(true);
+        txtNombre.setEnabled(true);
+        txtPaterno.setEnabled(true);
+        txtMaterno.setEnabled(true);
+        txtHisClinica.setEnabled(true);
+        txtDireccion.setEnabled(true);
+        dateNacimiento.setEnabled(true);
+        cboSexo.setEnabled(true);
+        cboFinanciador.setEnabled(true);
+    }
+    
+    void btnNuevo(){
+        btnNuevo.setEnabled(false);
+        btnGuardar.setEnabled(true);
+        btnActualizar.setEnabled(false);
+        btnCancelar.setEnabled(true);
+        btnSalir.setEnabled(true);
+    }
+   
+    void btnGuardar(){
+        btnNuevo.setEnabled(true);
+        btnGuardar.setEnabled(false);
+        btnActualizar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnSalir.setEnabled(true);
+    }
+    
+    void btnModificar(){
+        btnNuevo.setEnabled(false);
+        btnGuardar.setEnabled(false);
+        btnActualizar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btnSalir.setEnabled(true);
+    }
+    
+    void btnCancelar(){
+        btnNuevo.setEnabled(true);
+        btnGuardar.setEnabled(false);
+        btnActualizar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnSalir.setEnabled(true);
     }
     
     void cargar2(String valor){
@@ -160,7 +220,68 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
         }
     }
     
-    
+    void modificar1() {
+            try {
+                String dnii = txtDNI.getText();
+                String nombree = txtNombre.getText();
+                String paternoo = txtPaterno.getText();
+                String maternoo = txtMaterno.getText();
+                String generoo = cboSexo.getSelectedItem().toString();
+                int año = dateNacimiento.getCalendar().get(Calendar.YEAR);
+                int dia = dateNacimiento.getCalendar().get(Calendar.DAY_OF_MONTH);
+                int mes = dateNacimiento.getCalendar().get(Calendar.MARCH);
+                String fecha = año+"-"+mes+"-"+dia;
+                
+                        int anionace = dateNacimiento.getDate().getYear()+1900;
+                        int mesanace= dateNacimiento.getDate().getMonth() + 1;
+                        int dianace = dateNacimiento.getDate().getDay();
+                        
+                        Date fechaActual = new Date();
+                        int anioactual = fechaActual.getYear()+1900;
+                        int mesactual = fechaActual.getMonth()+1;
+                        int diaactual = fechaActual.getDay();
+                        
+                        
+                        int edad = 0;
+                        if(mesactual > mesanace){
+                            edad = anioactual - anionace;
+                        }
+                        else if(mesactual == mesanace){
+                            if(diaactual >= dianace){
+                                edad = anioactual - anionace;
+                            }
+                            else{
+                                edad = (anioactual - anionace) -1;
+                            }
+                        }
+                        else if(mesactual < mesanace){
+                            edad = (anioactual - anionace) -1;
+                        }         
+                
+                String direcionn = txtDireccion.getText();
+                int historiall = Integer.parseInt(txtHisClinica.getText());
+                int financiador = cboFinanciador.getSelectedIndex();
+                
+                    String insertar = "UPDATE Paciente SET "
+                    +"nombre='"+nombree+"', "
+                    +"apellidoPaterno='"+paternoo+"', "
+                    +"apellidoMaterno='"+maternoo+"', "
+                    +"edad='"+edad+"', "
+                    +"sexo='"+generoo+"', "
+                    +"fechaNacimiento='"+fecha+"', "
+                    +"direccion='"+direcionn+"', "
+                    +"historiaClinica="+historiall+", "
+                    +"idFinanciador="+financiador+" "
+                    +"WHERE dni='"+dnii+"'";
+                    PreparedStatement pst = cn.prepareStatement(insertar);
+
+                    pst.executeUpdate();
+                    
+                    cargar2("");
+            } catch (Exception e) {
+                System.out.println("error 1 "+e);
+            }    
+    }
     
     
     
@@ -236,6 +357,11 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
         btnCancelar.setText("Cancelar");
         btnCancelar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         btnCancelar.setBorderPainted(false);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnGuardar.setText("Guardar");
@@ -300,6 +426,11 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
             }
         ));
         tablaMostrarPaciente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tablaMostrarPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMostrarPacienteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaMostrarPaciente);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Detalle Paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
@@ -509,17 +640,66 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
         //System.out.println("hola: " + cboFinanciador.getSelectedIndex());
         ingresar();
         limpiar();
+        bloquear();
+        btnGuardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         limpiar();
+        desbloquear();
+        btnNuevo();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
+        modificar1();
         limpiar();
+        bloquear();
     }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        bloquear();
+        limpiar();
+        btnCancelar();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void tablaMostrarPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMostrarPacienteMouseClicked
+        // TODO add your handling code here:
+        String dni=(String) tablaMostrarPaciente.getValueAt(tablaMostrarPaciente.getSelectedRow(),0);
+            String mostrar;
+            try {
+                //txtNombre.setText("holaaaa");
+                /*String insertar = "UPDATE tbEmpleado SET "
+                   +"EstadoEmpleado="+2+" "
+                   +"WHERE idEmpleados='"+id+"'";
+                  PreparedStatement pst = cn.prepareStatement(insertar);
+                  pst.executeUpdate();*/
+                        String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
+
+                        Statement st = cn.createStatement();
+                        ResultSet rs = st.executeQuery(ConsultaSQL);                    
+                     
+                        if(rs.next()){
+                         
+                            txtDNI.setText(rs.getString("dni"));
+                            txtNombre.setText(rs.getString("nombre"));
+                            txtPaterno.setText(rs.getString("apellidoPaterno"));
+                            txtMaterno.setText(rs.getString("apellidoMaterno"));
+                            dateNacimiento.setDate(rs.getDate("fechaNacimiento"));
+                            txtDireccion.setText(rs.getString("direccion"));
+                            cboSexo.setSelectedItem("");
+                            txtHisClinica.setText(rs.getString("historiaClinica"));
+                            cboFinanciador.setSelectedIndex(rs.getInt("idFinanciador"));
+                        } 
+                        desbloquear();
+                        btnModificar();
+                        System.out.println("dd: " + dni);
+            } catch (Exception e) {
+                System.out.println("ERROR seleccionar datos: "+e.getMessage());
+            }
+    }//GEN-LAST:event_tablaMostrarPacienteMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
