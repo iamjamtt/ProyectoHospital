@@ -32,6 +32,7 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
         ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/FondoHospital.jpg"));
         Image image = icon.getImage();
         Escritorio = new javax.swing.JDesktopPane(){
@@ -44,6 +45,10 @@ public class Main extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuArchivo = new javax.swing.JMenu();
         MenuRegistros = new javax.swing.JMenu();
+        MenuPaciente = new javax.swing.JMenuItem();
+        MenuGenerar = new javax.swing.JMenu();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,10 +64,26 @@ public class Main extends javax.swing.JFrame {
         );
 
         MenuArchivo.setText("Archivo");
+        MenuArchivo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuBar1.add(MenuArchivo);
 
         MenuRegistros.setText("Registros");
+        MenuRegistros.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        MenuPaciente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        MenuPaciente.setText("Pacientes");
+        MenuPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuPacienteActionPerformed(evt);
+            }
+        });
+        MenuRegistros.add(MenuPaciente);
+
         jMenuBar1.add(MenuRegistros);
+
+        MenuGenerar.setText("Generar");
+        MenuGenerar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jMenuBar1.add(MenuGenerar);
 
         setJMenuBar(jMenuBar1);
 
@@ -79,6 +100,13 @@ public class Main extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void MenuPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPacienteActionPerformed
+        // TODO add your handling code here:
+        IngresarPaciente ingPac = new IngresarPaciente();
+        Escritorio.add(ingPac);
+        ingPac.show();
+    }//GEN-LAST:event_MenuPacienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -118,7 +146,10 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenu MenuArchivo;
+    private javax.swing.JMenu MenuGenerar;
+    private javax.swing.JMenuItem MenuPaciente;
     private javax.swing.JMenu MenuRegistros;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
 }
