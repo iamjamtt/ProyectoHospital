@@ -9,12 +9,12 @@ package Visualizar;
  *
  * @author jamt_
  */
-public class Principal extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame {
 
     /**
-     * Creates new form Principal
+     * Creates new form Main
      */
-    public Principal() {
+    public Main() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -30,15 +30,15 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuArchivo = new javax.swing.JMenu();
-        MenuIngresos = new javax.swing.JMenu();
+        MenuRegistros = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         MenuArchivo.setText("Archivo");
         jMenuBar1.add(MenuArchivo);
 
-        MenuIngresos.setText("Ingresos");
-        jMenuBar1.add(MenuIngresos);
+        MenuRegistros.setText("Registros");
+        jMenuBar1.add(MenuRegistros);
 
         setJMenuBar(jMenuBar1);
 
@@ -46,11 +46,11 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 773, Short.MAX_VALUE)
+            .addGap(0, 1050, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 481, Short.MAX_VALUE)
+            .addGap(0, 626, Short.MAX_VALUE)
         );
 
         pack();
@@ -73,27 +73,27 @@ public class Principal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                new Main().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuArchivo;
-    private javax.swing.JMenu MenuIngresos;
+    private javax.swing.JMenu MenuRegistros;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }
