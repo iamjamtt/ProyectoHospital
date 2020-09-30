@@ -170,10 +170,10 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
             pst.setString(3, txtPaterno.getText());
             pst.setString(4, txtMaterno.getText());
             
-                int año = dateNacimiento.getCalendar().get(Calendar.YEAR);
+                int anio = dateNacimiento.getCalendar().get(Calendar.YEAR);
                 int dia = dateNacimiento.getCalendar().get(Calendar.DAY_OF_MONTH);
-                int mes = dateNacimiento.getCalendar().get(Calendar.MARCH);
-                String fecha = año+"-"+mes+"-"+dia;
+                int mes = dateNacimiento.getCalendar().get(Calendar.MARCH)+1;
+                String fecha = anio+"-"+mes+"-"+dia;
                 
                         int anionace = dateNacimiento.getDate().getYear()+1900;
                         int mesanace= dateNacimiento.getDate().getMonth() + 1;
@@ -227,9 +227,10 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
                 String paternoo = txtPaterno.getText();
                 String maternoo = txtMaterno.getText();
                 String generoo = cboSexo.getSelectedItem().toString();
+                
                 int año = dateNacimiento.getCalendar().get(Calendar.YEAR);
                 int dia = dateNacimiento.getCalendar().get(Calendar.DAY_OF_MONTH);
-                int mes = dateNacimiento.getCalendar().get(Calendar.MARCH);
+                int mes = dateNacimiento.getCalendar().get(Calendar.MARCH)+1;
                 String fecha = año+"-"+mes+"-"+dia;
                 
                         int anionace = dateNacimiento.getDate().getYear()+1900;
@@ -266,7 +267,7 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
                     +"nombre='"+nombree+"', "
                     +"apellidoPaterno='"+paternoo+"', "
                     +"apellidoMaterno='"+maternoo+"', "
-                    +"edad='"+edad+"', "
+                    +"edad="+edad+", "
                     +"sexo='"+generoo+"', "
                     +"fechaNacimiento='"+fecha+"', "
                     +"direccion='"+direcionn+"', "
@@ -279,7 +280,7 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
                     
                     cargar2("");
             } catch (Exception e) {
-                System.out.println("error 1 "+e);
+                System.out.println("error al cargar los datos: "+e);
             }    
     }
     
@@ -656,6 +657,7 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
         modificar1();
         limpiar();
         bloquear();
+        btnModificar();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -670,26 +672,19 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
         String dni=(String) tablaMostrarPaciente.getValueAt(tablaMostrarPaciente.getSelectedRow(),0);
             String mostrar;
             try {
-                //txtNombre.setText("holaaaa");
-                /*String insertar = "UPDATE tbEmpleado SET "
-                   +"EstadoEmpleado="+2+" "
-                   +"WHERE idEmpleados='"+id+"'";
-                  PreparedStatement pst = cn.prepareStatement(insertar);
-                  pst.executeUpdate();*/
                         String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
 
                         Statement st = cn.createStatement();
                         ResultSet rs = st.executeQuery(ConsultaSQL);                    
                      
                         if(rs.next()){
-                         
                             txtDNI.setText(rs.getString("dni"));
                             txtNombre.setText(rs.getString("nombre"));
                             txtPaterno.setText(rs.getString("apellidoPaterno"));
                             txtMaterno.setText(rs.getString("apellidoMaterno"));
                             dateNacimiento.setDate(rs.getDate("fechaNacimiento"));
                             txtDireccion.setText(rs.getString("direccion"));
-                            cboSexo.setSelectedItem("");
+                            cboSexo.setSelectedItem(rs.getString("sexo"));
                             txtHisClinica.setText(rs.getString("historiaClinica"));
                             cboFinanciador.setSelectedIndex(rs.getInt("idFinanciador"));
                         } 
