@@ -115,6 +115,14 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
     }
     
     void btnModificar(){
+        btnNuevo.setEnabled(true);
+        btnGuardar.setEnabled(false);
+        btnActualizar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnSalir.setEnabled(true);
+    }
+    
+    void btnModificar2(){
         btnNuevo.setEnabled(false);
         btnGuardar.setEnabled(false);
         btnActualizar.setEnabled(true);
@@ -326,12 +334,14 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
         txtBuscarDNI = new javax.swing.JTextField();
         btnMostrarTodos = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Registro de Paciente");
 
+        jPanel1.setBackground(new java.awt.Color(0, 153, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Botones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
         btnSalir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -414,6 +424,7 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        tablaMostrarPaciente.setBackground(new java.awt.Color(0, 153, 255));
         tablaMostrarPaciente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tablaMostrarPaciente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -434,6 +445,7 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tablaMostrarPaciente);
 
+        jPanel2.setBackground(new java.awt.Color(0, 153, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Detalle Paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -689,7 +701,7 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
                             cboFinanciador.setSelectedIndex(rs.getInt("idFinanciador"));
                         } 
                         desbloquear();
-                        btnModificar();
+                        btnModificar2();
                         System.out.println("dd: " + dni);
             } catch (Exception e) {
                 System.out.println("ERROR seleccionar datos: "+e.getMessage());

@@ -46,6 +46,7 @@ public class Main extends javax.swing.JFrame {
         MenuArchivo = new javax.swing.JMenu();
         MenuRegistros = new javax.swing.JMenu();
         MenuPaciente = new javax.swing.JMenuItem();
+        MenuMedicos = new javax.swing.JMenuItem();
         MenuGenerar = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
@@ -79,6 +80,14 @@ public class Main extends javax.swing.JFrame {
         });
         MenuRegistros.add(MenuPaciente);
 
+        MenuMedicos.setText("Medicos");
+        MenuMedicos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuMedicosActionPerformed(evt);
+            }
+        });
+        MenuRegistros.add(MenuMedicos);
+
         jMenuBar1.add(MenuRegistros);
 
         MenuGenerar.setText("Generar");
@@ -107,6 +116,13 @@ public class Main extends javax.swing.JFrame {
         Escritorio.add(ingPac);
         ingPac.show();
     }//GEN-LAST:event_MenuPacienteActionPerformed
+
+    private void MenuMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuMedicosActionPerformed
+        // TODO add your handling code here:
+        IngresarMedico ingMed = new IngresarMedico();
+        Escritorio.add(ingMed);
+        ingMed.show();
+    }//GEN-LAST:event_MenuMedicosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,6 +163,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenu MenuArchivo;
     private javax.swing.JMenu MenuGenerar;
+    private javax.swing.JMenuItem MenuMedicos;
     private javax.swing.JMenuItem MenuPaciente;
     private javax.swing.JMenu MenuRegistros;
     private javax.swing.JMenuBar jMenuBar1;
