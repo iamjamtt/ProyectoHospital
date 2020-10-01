@@ -27,7 +27,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         initComponents();
         //cargarComboCama();
         cargarComboPlanta();
-
+        obtenerDiagnostico();
     }
 
     void cargarComboCama(){      
@@ -61,7 +61,34 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
             System.out.println("Error en combo Planta: " + e);
         }
     }    
-        
+      
+    
+    public void bucarMedico(){
+        String dni=txtDniM.getText();      
+            try {
+                    String mostrar="SELECT m.dni,m.nombre,m.apellidoPaterno,m.apellidoMaterno,e.descripcionE,m.turno FROM Medico m INNER JOIN Especialidad e ON m.idEspecialidad=e.idEspecialidad WHERE m.estado="+1+" AND m.dni='"+dni+"'";
+                     //String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
+
+                     Statement st = cn.createStatement();
+                     ResultSet rs = st.executeQuery(mostrar);                    
+                     
+                     if(rs.next()){
+                         
+                         String nombreC= rs.getString("nombre") +" " + rs.getString("apellidoPaterno") + " " + rs.getString("apellidoMaterno");
+                         
+                        txtDniM.setText(rs.getString("dni"));
+                        txtNombreM.setText(nombreC);
+                        txtTurno.setText(rs.getString("turno"));
+                        txtEspecialidad.setText(rs.getString("descripcionE"));
+                       
+                    } 
+                        
+             } catch (SQLException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+    }
+    
     public void bucarPaciente(){
         String dni=txtDniP.getText();
             /*txtNombres.setText("");
@@ -104,7 +131,22 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
      
     }
     
-    
+    void obtenerDiagnostico(){
+            String SQL = "SELECT descripcionD FROM Diagnostico";
+            try {
+                PreparedStatement pst = cn.prepareStatement(SQL);
+                ResultSet rs = pst.executeQuery();
+                
+                cboDiagnostico.addItem("Seleccione una Opcion");
+                
+                while(rs.next()){
+                    cboDiagnostico.addItem(rs.getString("descripcionD"));
+                }
+            } catch (Exception e) {
+                System.out.println("Error en combo Cama: " + e);
+            }
+        
+    }
     
     
     
@@ -129,7 +171,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         txtHistoriaP = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jTextField8 = new javax.swing.JTextField();
+        txtEspecialidad = new javax.swing.JTextField();
         btnsbuscar2 = new javax.swing.JToggleButton();
         txtNombreM = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -137,7 +179,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtDniM = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        txtTurno = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         cboDiagnostico = new javax.swing.JComboBox<>();
@@ -246,6 +288,11 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
 
         btnsbuscar2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnsbuscar2.setText("BUSCAR");
+        btnsbuscar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsbuscar2ActionPerformed(evt);
+            }
+        });
 
         txtNombreM.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
@@ -277,11 +324,11 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtDniM, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -304,8 +351,8 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTurno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -613,6 +660,11 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnobtenerCamaActionPerformed
 
+    private void btnsbuscar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsbuscar2ActionPerformed
+        // TODO add your handling code here:
+        bucarMedico();
+    }//GEN-LAST:event_btnsbuscar2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnBuscar;
@@ -642,15 +694,15 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField txtDniM;
     private javax.swing.JTextField txtDniP;
+    private javax.swing.JTextField txtEspecialidad;
     private javax.swing.JTextField txtFinancieroP;
     private javax.swing.JTextField txtHistoriaP;
     private javax.swing.JTextField txtNombreM;
     private javax.swing.JTextField txtNombreP;
     private javax.swing.JTextField txtNroVisita;
+    private javax.swing.JTextField txtTurno;
     // End of variables declaration//GEN-END:variables
 ConexionSQL cc = new ConexionSQL();
 Connection cn= ConexionSQL.conexionn();
