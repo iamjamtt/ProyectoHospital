@@ -11,8 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -148,6 +150,33 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         
     }
     
+    void ingresar(){
+            String sql="";
+            
+            sql="INSERT INTO Historial (idPaciente,idMedico,idCama,idDiagnostico) VALUES (?,?,?,?)";
+            String selec = "SELECT p.idPaciente, m.idMedico, c.idCama, d.idDiagnostico FROM Historial h INNER JOIN Paciente p ON h.idPaciente=p.idPaciente INNER JOIN Medico m ON h.idMedico=m.idMedico INNER JOIN Cama c ON h.idCama=c.idCama INNER JOIN Diagnostico d ON h.idDiagnostico=d.idDiagnostico";
+        try {
+            PreparedStatement pst  = cn.prepareStatement(sql);
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(selec);
+            while(rs.next()){
+                pst.setString(1, rs.getString("idPaciente"));
+                pst.setString(2, rs.getString("idMedico"));
+                pst.setString(3, rs.getString("idCama"));
+                pst.setString(4, rs.getString("idDiagnostico"));
+            }
+            
+            int n=pst.executeUpdate();
+            if(n>0){
+            JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("Error al ingresar datos: " + ex);
+        }
+    }
+    
+    
     
     
     /**
@@ -170,6 +199,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         txtFinancieroP = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtHistoriaP = new javax.swing.JTextField();
+        txtIDp = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         txtEspecialidad = new javax.swing.JTextField();
         btnsbuscar2 = new javax.swing.JToggleButton();
@@ -180,6 +210,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         txtDniM = new javax.swing.JTextField();
         txtTurno = new javax.swing.JTextField();
+        txtIDp1 = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         cboDiagnostico = new javax.swing.JComboBox<>();
@@ -249,6 +280,8 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(txtDniP, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(txtIDp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtNombreP, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -269,7 +302,8 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtDniP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
+                    .addComponent(btnBuscar)
+                    .addComponent(txtIDp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -331,6 +365,8 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
                         .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtDniM, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(txtIDp1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnsbuscar2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtNombreM, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -343,7 +379,8 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtDniM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnsbuscar2))
+                    .addComponent(btnsbuscar2)
+                    .addComponent(txtIDp1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -550,6 +587,11 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
 
         btnGuardarHistorial.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnGuardarHistorial.setText("Guardar");
+        btnGuardarHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarHistorialActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -581,7 +623,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNuevo2)
                     .addComponent(btnGuardarHistorial))
@@ -665,6 +707,11 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         bucarMedico();
     }//GEN-LAST:event_btnsbuscar2ActionPerformed
 
+    private void btnGuardarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarHistorialActionPerformed
+        // TODO add your handling code here:
+        ingresar();
+    }//GEN-LAST:event_btnGuardarHistorialActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnBuscar;
@@ -699,6 +746,8 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtEspecialidad;
     private javax.swing.JTextField txtFinancieroP;
     private javax.swing.JTextField txtHistoriaP;
+    private javax.swing.JTextField txtIDp;
+    private javax.swing.JTextField txtIDp1;
     private javax.swing.JTextField txtNombreM;
     private javax.swing.JTextField txtNombreP;
     private javax.swing.JTextField txtNroVisita;

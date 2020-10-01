@@ -60,7 +60,7 @@
                   </Group>
                   <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="46" max="32767" attributes="0"/>
+              <EmptySpace pref="44" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnNuevo2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnGuardarHistorial" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -140,6 +140,8 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="txtDniP" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                      <Component id="txtIDp" min="-2" pref="50" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="btnBuscar" min="-2" pref="100" max="-2" attributes="0"/>
                                   </Group>
@@ -168,6 +170,7 @@
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtDniP" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtIDp" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -248,6 +251,8 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtHistoriaP">
             </Component>
+            <Component class="javax.swing.JTextField" name="txtIDp">
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel3">
@@ -287,6 +292,8 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="txtDniM" min="-2" pref="150" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="txtIDp1" min="-2" pref="50" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnsbuscar2" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
@@ -304,6 +311,7 @@
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtDniM" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnsbuscar2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtIDp1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -383,6 +391,8 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtTurno">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtIDp1">
             </Component>
           </SubComponents>
         </Container>
@@ -700,6 +710,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Guardar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarHistorialActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
