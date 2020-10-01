@@ -576,6 +576,11 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
         jLabel11.setText("BUSCAR:");
 
         txtBuscarDNI.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtBuscarDNI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarDNIActionPerformed(evt);
+            }
+        });
         txtBuscarDNI.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBuscarDNIKeyReleased(evt);
@@ -707,6 +712,10 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
                 System.out.println("ERROR seleccionar datos: "+e.getMessage());
             }
     }//GEN-LAST:event_tablaMostrarPacienteMouseClicked
+
+    private void txtBuscarDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarDNIActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarDNIActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
