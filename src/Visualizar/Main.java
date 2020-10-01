@@ -46,8 +46,6 @@ public class Main extends javax.swing.JFrame {
         MenuRegistros = new javax.swing.JMenu();
         MenuPaciente = new javax.swing.JMenuItem();
         MenuMedicos = new javax.swing.JMenuItem();
-        MenuCamas = new javax.swing.JMenu();
-        MenuVisualizar = new javax.swing.JMenuItem();
         MenuGenerar = new javax.swing.JMenu();
         MenuHospitalizacion = new javax.swing.JMenuItem();
 
@@ -80,6 +78,7 @@ public class Main extends javax.swing.JFrame {
         });
         MenuRegistros.add(MenuPaciente);
 
+        MenuMedicos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         MenuMedicos.setText("Medicos");
         MenuMedicos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,19 +88,6 @@ public class Main extends javax.swing.JFrame {
         MenuRegistros.add(MenuMedicos);
 
         jMenuBar1.add(MenuRegistros);
-
-        MenuCamas.setText("Camas");
-        MenuCamas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        MenuVisualizar.setText("Visualizar");
-        MenuVisualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuVisualizarActionPerformed(evt);
-            }
-        });
-        MenuCamas.add(MenuVisualizar);
-
-        jMenuBar1.add(MenuCamas);
 
         MenuGenerar.setText("Generar");
         MenuGenerar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -153,13 +139,6 @@ public class Main extends javax.swing.JFrame {
         genHos.show();
     }//GEN-LAST:event_MenuHospitalizacionActionPerformed
 
-    private void MenuVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuVisualizarActionPerformed
-        // TODO add your handling code here:
-        CamaVisualizar camVi = new CamaVisualizar();
-        Escritorio.add(camVi);
-        camVi.show();
-    }//GEN-LAST:event_MenuVisualizarActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -198,13 +177,11 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenu MenuArchivo;
-    private javax.swing.JMenu MenuCamas;
     private javax.swing.JMenu MenuGenerar;
     private javax.swing.JMenuItem MenuHospitalizacion;
     private javax.swing.JMenuItem MenuMedicos;
     private javax.swing.JMenuItem MenuPaciente;
     private javax.swing.JMenu MenuRegistros;
-    private javax.swing.JMenuItem MenuVisualizar;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }
