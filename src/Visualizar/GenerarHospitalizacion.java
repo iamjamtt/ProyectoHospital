@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -181,7 +182,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
             
             int n=pst.executeUpdate();
             if(n>0){
-            JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
+                JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
             }
             
         } catch (SQLException ex) {
@@ -734,10 +735,9 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
             PreparedStatement pst  = cn.prepareStatement(sql);
             pst.setString(1, "1");
             pst.setString(2, "0");
-            int n=pst.executeUpdate();
-            if(n>0){
-            JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
-            }
+            
+            pst.executeUpdate();
+
         } catch (SQLException ex) {
             System.out.println("Error al ingresar datos: " + ex);
         }
@@ -757,11 +757,23 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
             System.out.println("ERROR seleccionar datos: "+e.getMessage());
         }
         
-        
-        
-        
-        
         ingresar();
+        
+        try {
+                int idcama = Integer.parseInt(cboCama.getSelectedItem().toString());
+   
+                    String insertar = "UPDATE Cama SET "
+                    +"estado="+2+" "
+                    +"WHERE idCama="+idcama+"";
+                    PreparedStatement pst = cn.prepareStatement(insertar);
+
+                    pst.executeUpdate();
+
+            } catch (Exception e) {
+                System.out.println("error al cargar los datos: "+e);
+            }
+        
+        
     }//GEN-LAST:event_btnGuardarHistorialActionPerformed
 
     private void txtNombrePActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombrePActionPerformed
