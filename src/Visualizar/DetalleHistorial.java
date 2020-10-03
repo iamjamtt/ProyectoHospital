@@ -34,7 +34,6 @@ public class DetalleHistorial extends javax.swing.JInternalFrame {
         String []titulos={"DNI Paciente","Nombre Medico","ID Cama","Peso Paciente","Talla Paciente","Diagnostico Paciente","Fecha de Ingreso"};
         String []Registros=new String[7];
         model= new DefaultTableModel(null, titulos);
-        String apellido="";
         try {
               Statement st = cn.createStatement();
               ResultSet rs = st.executeQuery(mostrar);
