@@ -702,7 +702,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
     private void btnobtenerCamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnobtenerCamaActionPerformed
         // TODO add your handling code here:
         int id = cboPlantas.getSelectedIndex();
-        String ConsultaSQL = "SELECT * FROM Cama WHERE idPlanta="+id;
+        String ConsultaSQL = "SELECT * FROM Cama WHERE idPlanta="+id +" AND estado="+1;
         try {   
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(ConsultaSQL);
