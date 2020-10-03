@@ -32,6 +32,9 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/FondoHospital.jpg"));
         Image image = icon.getImage();
         Escritorio = new javax.swing.JDesktopPane(){
@@ -48,6 +51,14 @@ public class Main extends javax.swing.JFrame {
         MenuMedicos = new javax.swing.JMenuItem();
         MenuGenerar = new javax.swing.JMenu();
         MenuHospitalizacion = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        MenuDetalleHistorial = new javax.swing.JMenuItem();
+
+        jMenu1.setText("File");
+        jMenuBar2.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar2.add(jMenu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,6 +113,20 @@ public class Main extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuGenerar);
 
+        jMenu3.setText("Historial");
+        jMenu3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        MenuDetalleHistorial.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        MenuDetalleHistorial.setText("Detalle");
+        MenuDetalleHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuDetalleHistorialActionPerformed(evt);
+            }
+        });
+        jMenu3.add(MenuDetalleHistorial);
+
+        jMenuBar1.add(jMenu3);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -138,6 +163,13 @@ public class Main extends javax.swing.JFrame {
         Escritorio.add(genHos);
         genHos.show();
     }//GEN-LAST:event_MenuHospitalizacionActionPerformed
+
+    private void MenuDetalleHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuDetalleHistorialActionPerformed
+        // TODO add your handling code here:
+        DetalleHistorial detHis = new DetalleHistorial();
+        Escritorio.add(detHis);
+        detHis.show();
+    }//GEN-LAST:event_MenuDetalleHistorialActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,11 +209,16 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenu MenuArchivo;
+    private javax.swing.JMenuItem MenuDetalleHistorial;
     private javax.swing.JMenu MenuGenerar;
     private javax.swing.JMenuItem MenuHospitalizacion;
     private javax.swing.JMenuItem MenuMedicos;
     private javax.swing.JMenuItem MenuPaciente;
     private javax.swing.JMenu MenuRegistros;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
     // End of variables declaration//GEN-END:variables
 }
