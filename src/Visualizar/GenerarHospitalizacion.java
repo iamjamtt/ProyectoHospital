@@ -31,9 +31,9 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         //cargarComboCama();
         cargarComboPlanta();
         obtenerDiagnostico();
-        /*txtIDp.setVisible(false);
+        txtIDp.setVisible(false);
         txtIDp1.setVisible(false);
-        txtVisitanueva.setVisible(false);*/
+        txtVisitanueva.setVisible(false);
     }
 
     void cargarComboCama(){      
@@ -167,7 +167,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
             pst.setInt(2, Integer.parseInt(txtIDp1.getText()));
             pst.setInt(3, Integer.parseInt(cboCama.getSelectedItem().toString()));   
             pst.setInt(4, cboDiagnostico.getSelectedIndex());
-            pst.setInt(5, 1);
+            pst.setInt(5, Integer.parseInt(txtVisitanueva.getText()));
             pst.setDouble(6, Double.parseDouble(txtPeso.getText()));
             pst.setDouble(7, Double.parseDouble(txtTalla.getText()));
 
@@ -179,6 +179,10 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
             String fecha = anioactual+"-"+mesactual+"-"+diaactual;
             pst.setString(8,fecha);
             
+            int n=pst.executeUpdate();
+            if(n>0){
+            JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
+            }
             
         } catch (SQLException ex) {
             System.out.println("Error al ingresar datos: " + ex);
@@ -614,6 +618,11 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Visitas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
         btnObtenerVisita.setText("NUEVA VISITA");
+        btnObtenerVisita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObtenerVisitaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -777,6 +786,39 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
     private void txtNombrePActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombrePActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombrePActionPerformed
+
+    private void btnObtenerVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObtenerVisitaActionPerformed
+        // TODO add your handling code here:
+        String sql="";
+            
+            sql="INSERT INTO Visita (estadoVisita,nroVisita) VALUES (?,?)";
+        try {
+            PreparedStatement pst  = cn.prepareStatement(sql);
+            pst.setString(1, "1");
+            pst.setString(2, "0");
+            int n=pst.executeUpdate();
+            if(n>0){
+            JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al ingresar datos: " + ex);
+        }
+        
+        String Consul = "SELECT idVisita FROM Visita WHERE idVisita = (SELECT MAX(idVisita ) FROM Visita)";
+        try {   
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(Consul);
+
+            if(rs.next()){
+                txtVisitanueva.setText(rs.getString("idVisita"));
+            }
+            
+            System.out.println(" "+ txtVisitanueva.getText());
+            
+        } catch (Exception e) {
+            System.out.println("ERROR seleccionar datos: "+e.getMessage());
+        }
+    }//GEN-LAST:event_btnObtenerVisitaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

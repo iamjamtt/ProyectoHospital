@@ -787,6 +787,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="NUEVA VISITA"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnObtenerVisitaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtVisitanueva">
             </Component>
