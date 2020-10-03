@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -30,9 +31,9 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         //cargarComboCama();
         cargarComboPlanta();
         obtenerDiagnostico();
-        txtIDp.setVisible(false);
+        /*txtIDp.setVisible(false);
         txtIDp1.setVisible(false);
-        txtVisitanueva.setVisible(false);
+        txtVisitanueva.setVisible(false);*/
     }
 
     void cargarComboCama(){      
@@ -157,32 +158,32 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
     }
     
     void ingresar(){
-            String sql="";
             
-            sql="INSERT INTO Historial (idPaciente,idMedico,idCama,idDiagnostico) VALUES (?,?,?,?)";
-            String selec = "SELECT p.idPaciente, m.idMedico, c.idCama, d.idDiagnostico FROM Historial h INNER JOIN Paciente p ON h.idPaciente=p.idPaciente INNER JOIN Medico m ON h.idMedico=m.idMedico INNER JOIN Cama c ON h.idCama=c.idCama INNER JOIN Diagnostico d ON h.idDiagnostico=d.idDiagnostico";
+        String sql="INSERT INTO Historial (idPaciente,idMedico,idCama,idDiagnostico,idVisita,peso,talla,fechaHistorial) VALUES (?,?,?,?,?,?,?,?)";
+      
         try {
             PreparedStatement pst  = cn.prepareStatement(sql);
-            Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery(selec);
-            while(rs.next()){
-                pst.setString(1, rs.getString("idPaciente"));
-                pst.setString(2, rs.getString("idMedico"));
-                pst.setString(3, rs.getString("idCama"));
-                pst.setString(4, rs.getString("idDiagnostico"));
-            }
+            pst.setInt(1, Integer.parseInt(txtIDp.getText()) );
+            pst.setInt(2, Integer.parseInt(txtIDp1.getText()));
+            pst.setInt(3, Integer.parseInt(cboCama.getSelectedItem().toString()));   
+            pst.setInt(4, cboDiagnostico.getSelectedIndex());
+            pst.setInt(5, 1);
+            pst.setDouble(6, Double.parseDouble(txtPeso.getText()));
+            pst.setDouble(7, Double.parseDouble(txtTalla.getText()));
+
+            Date fechaActual = new Date();
+            int anioactual = fechaActual.getYear()+1900;
+            int mesactual = fechaActual.getMonth()+1;
+            int diaactual = fechaActual.getDay();
             
-            int n=pst.executeUpdate();
-            if(n>0){
-            JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
-            }
+            String fecha = anioactual+"-"+mesactual+"-"+diaactual;
+            pst.setString(8,fecha);
+            
             
         } catch (SQLException ex) {
             System.out.println("Error al ingresar datos: " + ex);
         }
     }
-    
-    
     
     
     /**
@@ -600,10 +601,10 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel9.setBackground(new java.awt.Color(204, 255, 255));
@@ -688,7 +689,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnGuardarHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
