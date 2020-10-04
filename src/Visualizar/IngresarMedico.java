@@ -87,8 +87,8 @@ public class IngresarMedico extends javax.swing.JInternalFrame {
     
     void cargarCondicion(){
         cboCondicion.addItem("Seleccione una Opcion");
-        cboCondicion.addItem("Medico trabajando");
-        cboCondicion.addItem("Medico de baja");
+        cboCondicion.addItem("Medico laborando");
+        cboCondicion.addItem("Medico no laborando");
     }
     
     void limpiar(){
@@ -341,7 +341,7 @@ public class IngresarMedico extends javax.swing.JInternalFrame {
         jLabel1.setText("DNI:");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel2.setText("NOMNREA:");
+        jLabel2.setText("NOMBRES:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("APELLIDO PATERNO:");
