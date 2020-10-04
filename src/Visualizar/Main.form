@@ -70,6 +70,14 @@
             </Property>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="MenuVisita">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Visita"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuVisitaActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="MenuHospitalizacion">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hospitalizacion"/>

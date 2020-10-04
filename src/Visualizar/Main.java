@@ -50,6 +50,7 @@ public class Main extends javax.swing.JFrame {
         MenuPaciente = new javax.swing.JMenuItem();
         MenuMedicos = new javax.swing.JMenuItem();
         MenuGenerar = new javax.swing.JMenu();
+        MenuVisita = new javax.swing.JMenuItem();
         MenuHospitalizacion = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         MenuDetalleHistorial = new javax.swing.JMenuItem();
@@ -102,6 +103,14 @@ public class Main extends javax.swing.JFrame {
 
         MenuGenerar.setText("Generar");
         MenuGenerar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        MenuVisita.setText("Visita");
+        MenuVisita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuVisitaActionPerformed(evt);
+            }
+        });
+        MenuGenerar.add(MenuVisita);
 
         MenuHospitalizacion.setText("Hospitalizacion");
         MenuHospitalizacion.addActionListener(new java.awt.event.ActionListener() {
@@ -171,6 +180,13 @@ public class Main extends javax.swing.JFrame {
         detHis.show();
     }//GEN-LAST:event_MenuDetalleHistorialActionPerformed
 
+    private void MenuVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuVisitaActionPerformed
+        // TODO add your handling code here:
+        Visita genVisita = new Visita();
+        Escritorio.add(genVisita);
+        genVisita.show();
+    }//GEN-LAST:event_MenuVisitaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -215,6 +231,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuMedicos;
     private javax.swing.JMenuItem MenuPaciente;
     private javax.swing.JMenu MenuRegistros;
+    private javax.swing.JMenuItem MenuVisita;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
