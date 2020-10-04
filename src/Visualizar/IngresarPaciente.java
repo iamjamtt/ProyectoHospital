@@ -190,7 +190,7 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
                         Date fechaActual = new Date();
                         int anioactual = fechaActual.getYear()+1900;
                         int mesactual = fechaActual.getMonth()+1;
-                        int diaactual = fechaActual.getDay();
+                        int diaactual = fechaActual.getDate();
                         
                         
                         int edad = 0;
@@ -248,7 +248,7 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
                         Date fechaActual = new Date();
                         int anioactual = fechaActual.getYear()+1900;
                         int mesactual = fechaActual.getMonth()+1;
-                        int diaactual = fechaActual.getDay();
+                        int diaactual = fechaActual.getDate();
                         
                         
                         int edad = 0;
