@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
@@ -74,7 +75,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
     public void bucarMedico(){
         String dni=txtDniM.getText();      
             try {
-                    String mostrar="SELECT m.idMedico,m.dni,m.nombre,m.apellidoPaterno,m.apellidoMaterno,e.descripcionE,m.turno FROM Medico m INNER JOIN Especialidad e ON m.idEspecialidad=e.idEspecialidad WHERE m.estado="+1+" AND m.dni='"+dni+"'";
+                    String mostrar="SELECT m.idMedico,m.dni,m.nombre,m.apellidoPaterno,m.apellidoMaterno,e.descripcionE,m.turno FROM Medico m INNER JOIN Especialidad e ON m.idEspecialidad=e.idEspecialidad WHERE m.estado="+1+" AND m.condicion="+1+" AND m.dni='"+dni+"'";
                      //String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
 
                      Statement st = cn.createStatement();
@@ -155,6 +156,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         
     }
     
+    
     void ingresar(){
             
         String sql="INSERT INTO Historial (idPaciente,idMedico,idCama,idDiagnostico,idVisita,peso,talla,fechaHistorial) VALUES (?,?,?,?,?,?,?,?)";
@@ -179,10 +181,14 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
             Date fechaActual = new Date();
             int anioactual = fechaActual.getYear()+1900;
             int mesactual = fechaActual.getMonth()+1;
-            int diaactual = fechaActual.getDay();            
+            int diaactual = fechaActual.getDate();            
             String fecha = anioactual+"-"+mesactual+"-"+diaactual;
             
-            pst.setString(8,fecha);
+            System.out.println(fecha);
+            System.out.println(anioactual);
+            System.out.println(mesactual);
+            System.out.println(diaactual);
+            pst.setString(8, fecha);
             
             int n=pst.executeUpdate();
             if(n>0){
@@ -289,7 +295,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         }
         
         //verificamos al mismo paciente para modificar su idCama y poner estado 1
-        if(cont>1){
+        if(cont>0){
             try {
                 int idcama = idCamaCambiar;
    
@@ -784,10 +790,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         bucarPaciente();
         PesoTallaPaciente();
-        
-        /*UNA VEZ QUE GUARDA EL HISTORIAL LO DESCOMENTAMOS ESTO*/
-        //VerificarCama(); 
-        
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void cboPlantasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboPlantasActionPerformed
@@ -800,6 +803,11 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
 
     private void btnobtenerCamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnobtenerCamaActionPerformed
         // TODO add your handling code here:
+        
+        /*LLAMAMOS A LA FUNCION PARA ACTIVAR LA CAMA POR UN MOMENTO
+          SI AL BUSCAR PACIENTE ES EL MISMO QUE HAY EN LA BASE DE DATOS*/
+        VerificarCama(); 
+        
         int id = cboPlantas.getSelectedIndex();
         String ConsultaSQL = "SELECT * FROM Cama WHERE idPlanta="+id +" AND estado="+1;
         try {   
@@ -829,9 +837,12 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
 
         /*NO BORRES NADA PUPILO, LO COMENTADO SIRVE*/
         
-        /*VerificarVisita();
+        /*LLAMAMOS A LA FUNCION VERIFICAR VISITA, DONDE SI ESTAMO GUARDANDO AL MISMO PACIENTE MAS DE UNA VEZ
+           ESTO SE GUARDARA CON EL MISMO IDVISITA*/
+        
+        VerificarVisita();
         System.out.println(idVisitaCambiar);
-        System.out.println(valorVisita);*/
+        System.out.println(valorVisita);
         
         if(valorVisita==false){
             String sql="INSERT INTO Visita (estadoVisita,nroVisita) VALUES (?,?)";
