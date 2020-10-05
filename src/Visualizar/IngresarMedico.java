@@ -198,35 +198,91 @@ public class IngresarMedico extends javax.swing.JInternalFrame {
         }
     }
     
+    public String detalleDNI(){
+        String dni=txtDNI.getText();
+        String dniRepetido = null;
+            try {
+                     String ConsultaSQL="SELECT * FROM Medico WHERE dni='"+dni+"'";
+
+                     Statement st = cn.createStatement();
+                     ResultSet rs = st.executeQuery(ConsultaSQL);                    
+                     
+                     if(rs.next()){
+                       dniRepetido = rs.getString("dni");     
+                     } 
+                        
+             } catch (SQLException ex) {
+                 
+             }
+        return dniRepetido;
+    }
+    
+    boolean vr = false;
+    boolean repetidoDNI = false;
+    boolean valida(){
+        if(txtDNI.getText().equals("") || txtNombre.getText().equals("")
+                || txtPaterno.getText().equals("") || txtMaterno.getText().equals("")
+                || cboTurno.getSelectedIndex()==0 || dateNacimiento.getDate()==null
+                || cboLaboral.getSelectedIndex()==0 || cboEstado.getSelectedIndex()==0
+                || cboCondicion.getSelectedIndex()==0 || cboEspecialidad.getSelectedIndex()==0){
+            return false;
+        }
+        if( txtDNI.getText().length()<8){
+            vr = true;
+            return false;
+        }
+        if(txtDNI.getText().equals(detalleDNI())){
+            repetidoDNI = true;
+            return false;
+        }
+        return true;
+    }
+    
     void ingresar(){
-        String sql = "INSERT INTO Medico (dni,nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,condicion,estado,idCondicionLaboral,idEspecialidad,turno) VALUES (?,?,?,?,?,?,?,?,?,?)";
-        try {
-            PreparedStatement pst  = cn.prepareStatement(sql);
-            pst.setString(1, txtDNI.getText());
-            pst.setString(2, txtNombre.getText());
-            pst.setString(3, txtPaterno.getText());
-            pst.setString(4, txtMaterno.getText());
-            
-                int anio = dateNacimiento.getCalendar().get(Calendar.YEAR);
-                int dia = dateNacimiento.getCalendar().get(Calendar.DAY_OF_MONTH);
-                int mes = dateNacimiento.getCalendar().get(Calendar.MARCH)+1;
-                String fecha = anio+"-"+mes+"-"+dia;
-         
-            pst.setString(5,fecha);
-            pst.setInt(6, cboCondicion.getSelectedIndex());   
-            pst.setInt(7, cboEstado.getSelectedIndex()); 
-            pst.setInt(8, cboLaboral.getSelectedIndex());
-            pst.setInt(9, cboEspecialidad.getSelectedIndex());
-            pst.setString(10, cboTurno.getSelectedItem().toString());
-            
-            int n=pst.executeUpdate();
-            if(n>0){
-            JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
+        if (!valida()){
+            if(vr==true){
+                JOptionPane.showMessageDialog(null, "Campo de DNI imcompleto");
+            }else if(repetidoDNI==true){
+                JOptionPane.showMessageDialog(null, "El DNI ingresado ya existe.");
+            }else{
+                JOptionPane.showMessageDialog(null, "Falta ingresar campos.");
             }
             
-            cargar2("");
-        } catch (SQLException ex) {
-            System.out.println("Error al ingresar datos: " + ex);
+        }
+        else{
+            String sql = "INSERT INTO Medico (dni,nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,condicion,estado,idCondicionLaboral,idEspecialidad,turno) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            try {
+                PreparedStatement pst  = cn.prepareStatement(sql);
+                pst.setString(1, txtDNI.getText());
+                pst.setString(2, txtNombre.getText());
+                pst.setString(3, txtPaterno.getText());
+                pst.setString(4, txtMaterno.getText());
+
+                    int anio = dateNacimiento.getCalendar().get(Calendar.YEAR);
+                    int dia = dateNacimiento.getCalendar().get(Calendar.DAY_OF_MONTH);
+                    int mes = dateNacimiento.getCalendar().get(Calendar.MARCH)+1;
+                    String fecha = anio+"-"+mes+"-"+dia;
+
+                pst.setString(5,fecha);
+                pst.setInt(6, cboCondicion.getSelectedIndex());   
+                pst.setInt(7, cboEstado.getSelectedIndex()); 
+                pst.setInt(8, cboLaboral.getSelectedIndex());
+                pst.setInt(9, cboEspecialidad.getSelectedIndex());
+                pst.setString(10, cboTurno.getSelectedItem().toString());
+
+                int n=pst.executeUpdate();
+                if(n>0){
+                JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
+                }
+
+                cargar2("");
+                
+                limpiar();
+                bloquear();
+                btnGuardar();
+            } catch (SQLException ex) {
+                System.out.println("Error al ingresar datos: " + ex);
+            }
         }
     }
     
@@ -352,6 +408,11 @@ public class IngresarMedico extends javax.swing.JInternalFrame {
         jLabel10.setText("ESPECIALIDAD:");
 
         txtDNI.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtDNI.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDNIKeyTyped(evt);
+            }
+        });
 
         txtNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
@@ -553,7 +614,7 @@ public class IngresarMedico extends javax.swing.JInternalFrame {
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -637,8 +698,6 @@ public class IngresarMedico extends javax.swing.JInternalFrame {
                 .addGap(58, 58, 58))
         );
 
-        jPanel2.getAccessibleContext().setAccessibleName("Detalle Médico");
-
         getAccessibleContext().setAccessibleName(" Medicos");
 
         pack();
@@ -717,10 +776,15 @@ public class IngresarMedico extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         //System.out.println("hola: " + cboFinanciador.getSelectedIndex());
         ingresar();
-        limpiar();
-        bloquear();
-        btnGuardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtDNIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDNIKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        
+        if(c<'0' || c>'9') evt.consume();
+        if (txtDNI.getText().length()== 8) evt.consume(); 
+    }//GEN-LAST:event_txtDNIKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -167,60 +167,116 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
         }
     }
     
+    public String detalleDNI(){
+        String dni=txtDNI.getText();
+        String dniRepetido = null;
+            try {
+                     String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
+
+                     Statement st = cn.createStatement();
+                     ResultSet rs = st.executeQuery(ConsultaSQL);                    
+                     
+                     if(rs.next()){
+                       dniRepetido = rs.getString("dni");     
+                     } 
+                        
+             } catch (SQLException ex) {
+                 
+             }
+        return dniRepetido;
+    }
+    
+    boolean vr = false;
+    boolean repetidoDNI = false;
+    boolean valida(){
+        if(txtDNI.getText().equals("") || txtNombre.getText().equals("")
+                || txtPaterno.getText().equals("") || txtMaterno.getText().equals("")
+                || txtHisClinica.getText().equals("") || txtDNI.getText().equals("")
+                || dateNacimiento.getDate()==null || txtDireccion.getText().equals("")
+                || cboSexo.getSelectedIndex()==-1 || cboFinanciador.getSelectedIndex()==0){
+            return false;
+        }
+        if( txtDNI.getText().length()<8){
+            vr = true;
+            return false;
+        }
+        if(txtDNI.getText().equals(detalleDNI())){
+            repetidoDNI = true;
+            return false;
+        }
+        return true;
+    }
+    
     void ingresar(){
-            String sql="INSERT INTO Paciente (dni,nombre,apellidoPaterno,apellidoMaterno,edad,sexo,fechaNacimiento,direccion,historiaClinica,idFinanciador) VALUES (?,?,?,?,?,?,?,?,?,?)";
-        try {
-            PreparedStatement pst  = cn.prepareStatement(sql);
-            pst.setString(1, txtDNI.getText());
-            pst.setString(2, txtNombre.getText());
-            pst.setString(3, txtPaterno.getText());
-            pst.setString(4, txtMaterno.getText());
-            
-                int anio = dateNacimiento.getCalendar().get(Calendar.YEAR);
-                int dia = dateNacimiento.getCalendar().get(Calendar.DAY_OF_MONTH);
-                int mes = dateNacimiento.getCalendar().get(Calendar.MARCH)+1;
-                String fecha = anio+"-"+mes+"-"+dia;
-                
-                int anionace = dateNacimiento.getDate().getYear()+1900;
-                int mesanace= dateNacimiento.getDate().getMonth() + 1;
-                int dianace = dateNacimiento.getDate().getDay();
-                        
-                Date fechaActual = new Date();
-                int anioactual = fechaActual.getYear()+1900;
-                int mesactual = fechaActual.getMonth()+1;
-                int diaactual = fechaActual.getDate();                       
-                        
-                int edad = 0;
-                if(mesactual > mesanace){
-                    edad = anioactual - anionace;
-                }
-                else if(mesactual == mesanace){
-                    if(diaactual >= dianace){
-                        edad = anioactual - anionace;
-                    }
-                    else{
-                        edad = (anioactual - anionace) -1;
-                    }
-                }
-                else if(mesactual < mesanace){
-                    edad = (anioactual - anionace) -1;
-                }                       
-                    
-            pst.setInt(5, edad);
-            pst.setString(6, cboSexo.getSelectedItem().toString());   
-            pst.setString(7,fecha);
-            pst.setString(8, txtDireccion.getText());
-            pst.setInt(9, Integer.parseInt(txtHisClinica.getText()));
-            pst.setInt(10, cboFinanciador.getSelectedIndex());
-            
-            int n=pst.executeUpdate();
-            if(n>0){
-                JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
+        if (!valida()){
+            if(vr==true){
+                JOptionPane.showMessageDialog(null, "Campo de DNI imcompleto");
+            }else if(repetidoDNI==true){
+                JOptionPane.showMessageDialog(null, "El DNI ingresado ya existe.");
+            }else{
+                JOptionPane.showMessageDialog(null, "Falta ingresar campos.");
             }
             
-            cargar2("");
-        } catch (SQLException ex) {
-            System.out.println("Error al ingresar datos: " + ex);
+        }
+        else{
+            String sql="INSERT INTO Paciente (dni,nombre,apellidoPaterno,apellidoMaterno,edad,sexo,fechaNacimiento,direccion,historiaClinica,idFinanciador) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            try {
+                PreparedStatement pst  = cn.prepareStatement(sql);
+                pst.setString(1, txtDNI.getText());
+                pst.setString(2, txtNombre.getText());
+                pst.setString(3, txtPaterno.getText());
+                pst.setString(4, txtMaterno.getText());
+
+                    int anio = dateNacimiento.getCalendar().get(Calendar.YEAR);
+                    int dia = dateNacimiento.getCalendar().get(Calendar.DAY_OF_MONTH);
+                    int mes = dateNacimiento.getCalendar().get(Calendar.MARCH)+1;
+                    String fecha = anio+"-"+mes+"-"+dia;
+
+                    int anionace = dateNacimiento.getDate().getYear()+1900;
+                    int mesanace= dateNacimiento.getDate().getMonth() + 1;
+                    int dianace = dateNacimiento.getDate().getDay();
+
+                    Date fechaActual = new Date();
+                    int anioactual = fechaActual.getYear()+1900;
+                    int mesactual = fechaActual.getMonth()+1;
+                    int diaactual = fechaActual.getDate();                       
+
+                    int edad = 0;
+                    if(mesactual > mesanace){
+                        edad = anioactual - anionace;
+                    }
+                    else if(mesactual == mesanace){
+                        if(diaactual >= dianace){
+                            edad = anioactual - anionace;
+                        }
+                        else{
+                            edad = (anioactual - anionace) -1;
+                        }
+                    }
+                    else if(mesactual < mesanace){
+                        edad = (anioactual - anionace) -1;
+                    }                       
+
+                pst.setInt(5, edad);
+                pst.setString(6, cboSexo.getSelectedItem().toString());   
+                pst.setString(7,fecha);
+                pst.setString(8, txtDireccion.getText());
+                pst.setInt(9, Integer.parseInt(txtHisClinica.getText()));
+                pst.setInt(10, cboFinanciador.getSelectedIndex());
+
+                int n=pst.executeUpdate();
+                if(n>0){
+                    JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
+                }
+
+                cargar2("");
+                
+                limpiar();
+                bloquear();
+                btnGuardar();
+            } catch (SQLException ex) {
+                System.out.println("Error al ingresar datos: " + ex);
+            }
         }
     }
     
@@ -287,6 +343,7 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
                 System.out.println("error al cargar los datos: "+e);
             }    
     }
+    
     
     
     
@@ -474,6 +531,16 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
         jLabel10.setText("FINANCIADOR:");
 
         txtDNI.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtDNI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDNIActionPerformed(evt);
+            }
+        });
+        txtDNI.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDNIKeyTyped(evt);
+            }
+        });
 
         txtNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
@@ -488,6 +555,11 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
         txtDireccion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         txtHisClinica.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtHisClinica.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtHisClinicaKeyTyped(evt);
+            }
+        });
 
         cboFinanciador.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
@@ -655,9 +727,6 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         //System.out.println("hola: " + cboFinanciador.getSelectedIndex());
         ingresar();
-        limpiar();
-        bloquear();
-        btnGuardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -714,6 +783,26 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
     private void txtBuscarDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarDNIActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarDNIActionPerformed
+
+    private void txtDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDNIActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDNIActionPerformed
+
+    private void txtDNIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDNIKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        
+        if(c<'0' || c>'9') evt.consume();
+        if (txtDNI.getText().length()== 8) evt.consume(); 
+    }//GEN-LAST:event_txtDNIKeyTyped
+
+    private void txtHisClinicaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHisClinicaKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        
+        if(c<'0' || c>'9') evt.consume();
+        if (txtHisClinica.getText().length()== 5) evt.consume(); 
+    }//GEN-LAST:event_txtHisClinicaKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

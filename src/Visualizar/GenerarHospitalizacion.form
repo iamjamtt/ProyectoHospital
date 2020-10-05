@@ -216,6 +216,9 @@
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDniPKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNombreP">
               <Properties>
@@ -260,6 +263,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtHistoriaP">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtHistoriaPKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtIDp">
             </Component>
@@ -269,6 +275,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtPeso">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPesoKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel12">
               <Properties>
@@ -276,6 +285,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtTalla">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTallaKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtVisitanueva">
             </Component>
@@ -709,6 +721,9 @@
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDniMKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtTurno">
             </Component>

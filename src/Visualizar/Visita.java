@@ -31,26 +31,27 @@ public class Visita extends javax.swing.JInternalFrame {
         modeloSpinner.setMaximum(4);
         modeloSpinner.setMinimum(0);
         spinerVisita.setModel(modeloSpinner);
+        noeditable();
     }
 
     int idPacientee = 0;
+   
     void obtenerIdPaciente(){  
-        
-        String dni = txtDniPaciente.getText();       
-        String mostrar="SELECT idPaciente FROM Paciente  WHERE dni='"+dni+"'";
-             
-        try {
-              Statement st = cn.createStatement();
-              ResultSet rs = st.executeQuery(mostrar);
-              
-              if(rs.next())
-              {
-                  idPacientee = rs.getInt("idPaciente");
-              }
+            String dni = txtDniPaciente.getText();       
+            String mostrar="SELECT idPaciente FROM Paciente  WHERE dni='"+dni+"'";
+            String dnii = "";
+            try {
+                    Statement st = cn.createStatement();
+                    ResultSet rs = st.executeQuery(mostrar);
 
-        } catch (SQLException ex) {
-            System.out.println("error en seleccionar paciente: " + ex);
-        }
+                    if(rs.next())
+                    {
+                        idPacientee = rs.getInt("idPaciente");
+                    }
+
+            } catch (SQLException ex) {
+                System.out.println("error en seleccionar paciente: " + ex);
+            }
     }
  
     int idVisita = 0;
@@ -105,6 +106,30 @@ public class Visita extends javax.swing.JInternalFrame {
         }
     }
     
+    void limpiar(){
+        txtDNIpaciente.setText("");
+        txtCantVisita.setText("");
+        txtDniPaciente.setText("");
+        txtFechaIngre.setText("");
+        txtNombreP.setText("");
+        txtNroCAMA.setText("");
+        txtNroHistorial.setText("");
+        txtCupos.setText("");
+        spinerVisita.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        txtDniPaciente.requestFocus();
+    }
+    
+    void noeditable(){
+        txtDNIpaciente.setEditable(false);
+        txtCantVisita.setEditable(false);
+        txtCupos.setEditable(false);
+        txtFechaIngre.setEditable(false);
+        txtNombreP.setEditable(false);
+        txtNroCAMA.setEditable(false);
+        txtNroHistorial.setEditable(false);
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -149,12 +174,17 @@ public class Visita extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle Paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle Visita", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("DNI:");
 
         txtDniPaciente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtDniPaciente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDniPacienteKeyTyped(evt);
+            }
+        });
 
         btnBuscar.setBackground(new java.awt.Color(204, 204, 204));
         btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -212,7 +242,7 @@ public class Visita extends javax.swing.JInternalFrame {
                         .addComponent(jLabel3)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 80, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 124, Short.MAX_VALUE)
                         .addComponent(jLabel9)
                         .addGap(66, 66, 66))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -231,7 +261,6 @@ public class Visita extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtCantVisita, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
@@ -383,11 +412,21 @@ public class Visita extends javax.swing.JInternalFrame {
                 if(n>0){
                 JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
                 }
+                
+                limpiar();
             } catch (Exception e) {
                     System.out.println("errorinhos: "+e);
             }
         
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtDniPacienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniPacienteKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        
+        if(c<'0' || c>'9') evt.consume();
+        if (txtDniPaciente.getText().length()== 8) evt.consume(); 
+    }//GEN-LAST:event_txtDniPacienteKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -37,6 +37,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         txtIDp.setVisible(false);
         txtIDp1.setVisible(false);
         txtVisitanueva.setVisible(false);
+        noEditable();
     }
 
     void cargarComboCama(){      
@@ -154,49 +155,51 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         
     }
     
-    
     void ingresar(){
-            
-        String sql="INSERT INTO Historial (idPaciente,idMedico,idCama,idDiagnostico,idVisita,peso,talla,fechaHistorial) VALUES (?,?,?,?,?,?,?,?)";
-      
-        try {
-            PreparedStatement pst  = cn.prepareStatement(sql);
-            pst.setInt(1, Integer.parseInt(txtIDp.getText()) );
-            pst.setInt(2, Integer.parseInt(txtIDp1.getText()));
-            pst.setInt(3, Integer.parseInt(cboCama.getSelectedItem().toString()));   
-            pst.setInt(4, cboDiagnostico.getSelectedIndex());
-            
-            if(valorVisita==true){
-                pst.setInt(5, idVisitaCambiar);
-            }
-            else{
-                pst.setInt(5, Integer.parseInt(txtVisitanueva.getText()));
-            }       
-            
-            pst.setDouble(6, Double.parseDouble(txtPeso.getText()));
-            pst.setDouble(7, Double.parseDouble(txtTalla.getText()));
+        
+            String sql="INSERT INTO Historial (idPaciente,idMedico,idCama,idDiagnostico,idVisita,peso,talla,fechaHistorial) VALUES (?,?,?,?,?,?,?,?)";
 
-            Date fechaActual = new Date();
-            int anioactual = fechaActual.getYear()+1900;
-            int mesactual = fechaActual.getMonth()+1;
-            int diaactual = fechaActual.getDate();
+            try {
+                PreparedStatement pst  = cn.prepareStatement(sql);
+                pst.setInt(1, Integer.parseInt(txtIDp.getText()) );
+                pst.setInt(2, Integer.parseInt(txtIDp1.getText()));
+                pst.setInt(3, Integer.parseInt(cboCama.getSelectedItem().toString()));   
+                pst.setInt(4, cboDiagnostico.getSelectedIndex());
 
-            int hora = fechaActual.getHours();
-            int minuto = fechaActual.getMinutes();
-            int segundo = fechaActual.getSeconds();
-            
-            String fecha = anioactual+"-"+mesactual+"-"+diaactual+" "+hora+":"+minuto+":"+segundo;
-   
-            pst.setString(8, fecha);
-            
-            int n=pst.executeUpdate();
-            if(n>0){
-                JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
+                if(valorVisita==true){
+                    pst.setInt(5, idVisitaCambiar);
+                }
+                else{
+                    pst.setInt(5, Integer.parseInt(txtVisitanueva.getText()));
+                }       
+
+                pst.setDouble(6, Double.parseDouble(txtPeso.getText()));
+                pst.setDouble(7, Double.parseDouble(txtTalla.getText()));
+
+                Date fechaActual = new Date();
+                int anioactual = fechaActual.getYear()+1900;
+                int mesactual = fechaActual.getMonth()+1;
+                int diaactual = fechaActual.getDate();
+
+                int hora = fechaActual.getHours();
+                int minuto = fechaActual.getMinutes();
+                int segundo = fechaActual.getSeconds();
+
+                String fecha = anioactual+"-"+mesactual+"-"+diaactual+" "+hora+":"+minuto+":"+segundo;
+
+                pst.setString(8, fecha);
+
+                int n=pst.executeUpdate();
+                if(n>0){
+                    JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
+                }
+
+                limpiar();
+
+            } catch (SQLException ex) {
+                System.out.println("Error al ingresar HISTORIAL datos: " + ex);
             }
-            
-        } catch (SQLException ex) {
-            System.out.println("Error al ingresar HISTORIAL datos: " + ex);
-        }
+        
     }
     
     void PesoTallaPaciente(){
@@ -309,6 +312,34 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
 
     }
     
+    void noEditable(){
+        txtNombreP.setEditable(false);
+        txtEspecialidad.setEditable(false);
+        txtFinancieroP.setEditable(false);
+        txtHistoriaP.setEditable(false);
+        txtNombreM.setEditable(false);
+        txtTurno.setEditable(false);
+    }
+    
+    void limpiar(){
+        txtDniM.setText("");
+        txtDniP.setText("");
+        txtEspecialidad.setText("");
+        txtFinancieroP.setText("");
+        txtHistoriaP.setText("");
+        txtIDp.setText("");
+        txtIDp1.setText("");
+        txtNombreM.setText("");
+        txtNombreP.setText("");
+        txtPeso.setText("");
+        txtTalla.setText("");
+        txtTurno.setText("");
+        txtVisitanueva.setText("");
+        cboCama.setSelectedIndex(-1);
+        cboPlantas.setSelectedIndex(0);
+        cboDiagnostico.setSelectedIndex(0);
+        
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -379,6 +410,11 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         jLabel2.setText("PACIENTE:");
 
         txtDniP.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtDniP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDniPKeyTyped(evt);
+            }
+        });
 
         txtNombreP.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNombreP.addActionListener(new java.awt.event.ActionListener() {
@@ -402,9 +438,27 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("HISTORIA CLÍNICA:");
 
+        txtHistoriaP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtHistoriaPKeyTyped(evt);
+            }
+        });
+
         jLabel11.setText("PESO (KG):");
 
+        txtPeso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPesoKeyTyped(evt);
+            }
+        });
+
         jLabel12.setText("TALLA (m):");
+
+        txtTalla.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTallaKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -671,6 +725,11 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         jLabel6.setText("MÉDICO:");
 
         txtDniM.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtDniM.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDniMKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -886,6 +945,42 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
     private void txtNombrePActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombrePActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombrePActionPerformed
+
+    private void txtDniPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniPKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        
+        if(c<'0' || c>'9') evt.consume();
+        if (txtDniP.getText().length()== 8) evt.consume(); 
+    }//GEN-LAST:event_txtDniPKeyTyped
+
+    private void txtDniMKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniMKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        
+        if(c<'0' || c>'9') evt.consume();
+        if (txtDniM.getText().length()== 8) evt.consume(); 
+    }//GEN-LAST:event_txtDniMKeyTyped
+
+    private void txtHistoriaPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHistoriaPKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        
+        if(c<'0' || c>'9') evt.consume();
+        if (txtHistoriaP.getText().length()== 5) evt.consume(); 
+    }//GEN-LAST:event_txtHistoriaPKeyTyped
+
+    private void txtTallaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTallaKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if((c<'0' || c>'9') && (c<',' || c>'.')) evt.consume();
+    }//GEN-LAST:event_txtTallaKeyTyped
+
+    private void txtPesoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if((c<'0' || c>'9') && (c<',' || c>'.')) evt.consume();
+    }//GEN-LAST:event_txtPesoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
