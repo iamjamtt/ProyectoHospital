@@ -75,23 +75,20 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
     public void bucarMedico(){
         String dni=txtDniM.getText();      
             try {
-                    String mostrar="SELECT m.idMedico,m.dni,m.nombre,m.apellidoPaterno,m.apellidoMaterno,e.descripcionE,m.turno FROM Medico m INNER JOIN Especialidad e ON m.idEspecialidad=e.idEspecialidad WHERE m.estado="+1+" AND m.condicion="+1+" AND m.dni='"+dni+"'";
-                     //String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
+                String mostrar="SELECT m.idMedico,m.dni,m.nombre,m.apellidoPaterno,m.apellidoMaterno,e.descripcionE,m.turno FROM Medico m INNER JOIN Especialidad e ON m.idEspecialidad=e.idEspecialidad WHERE m.estado="+1+" AND m.condicion="+1+" AND m.dni='"+dni+"'";
 
-                     Statement st = cn.createStatement();
-                     ResultSet rs = st.executeQuery(mostrar);                    
-                     
-                     if(rs.next()){
-                         
-                         String nombreC= rs.getString("nombre") +" " + rs.getString("apellidoPaterno") + " " + rs.getString("apellidoMaterno");
-                         
-                        txtDniM.setText(rs.getString("dni"));
-                        txtNombreM.setText(nombreC);
-                        txtIDp1.setText(rs.getString("idMedico"));
-                        txtTurno.setText(rs.getString("turno"));
-                        txtEspecialidad.setText(rs.getString("descripcionE"));
-                         System.out.println("hola: " + txtIDp1.getText());
-                    } 
+                Statement st = cn.createStatement();
+                ResultSet rs = st.executeQuery(mostrar);                    
+
+                if(rs.next()){
+
+                    String nombreC= rs.getString("nombre") +" " + rs.getString("apellidoPaterno") + " " + rs.getString("apellidoMaterno");                         
+                    txtDniM.setText(rs.getString("dni"));
+                    txtNombreM.setText(nombreC);
+                    txtIDp1.setText(rs.getString("idMedico"));
+                    txtTurno.setText(rs.getString("turno"));
+                    txtEspecialidad.setText(rs.getString("descripcionE"));
+                } 
                         
              } catch (SQLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,36 +99,37 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
     public void bucarPaciente(){
         String dni=txtDniP.getText();   
             try {
-                     String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
+                String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
 
-                     Statement st = cn.createStatement();
-                     ResultSet rs = st.executeQuery(ConsultaSQL);                    
-                     
-                     if(rs.next()){
-                         
-                        String nombreC= rs.getString("nombre") +" " + rs.getString("apellidoPaterno") + " " + rs.getString("apellidoMaterno"); 
-                        txtDniP.setText(rs.getString("dni"));
-                        txtNombreP.setText(nombreC);
-                        txtIDp.setText(rs.getString("idPaciente"));
-                        txtHistoriaP.setText(rs.getString("historiaClinica"));
-                        System.out.println("hola: " + txtIDp.getText());
-                        int financiador = rs.getInt("idFinanciador");
-             
-                        try {
-                            String ConsultaSQLFinanciador="SELECT * FROM Financiador WHERE idFinanciador='"+financiador+"'";
+                Statement st = cn.createStatement();
+                ResultSet rs = st.executeQuery(ConsultaSQL);                    
 
-                            Statement stf = cn.createStatement();
-                            ResultSet rsf = stf.executeQuery(ConsultaSQLFinanciador);                    
+                if(rs.next()){
 
-                            if(rsf.next()){
+                    String nombreC= rs.getString("nombre") +" " + rs.getString("apellidoPaterno") + " " + rs.getString("apellidoMaterno"); 
+                    txtDniP.setText(rs.getString("dni"));
+                    txtNombreP.setText(nombreC);
+                    txtIDp.setText(rs.getString("idPaciente"));
+                    txtHistoriaP.setText(rs.getString("historiaClinica"));
+                    System.out.println("hola: " + txtIDp.getText());
+                    int financiador = rs.getInt("idFinanciador");
 
-                               txtFinancieroP.setText(rsf.getString("nombreFinanciador"));
-                            } 
+                    try {
+                        String ConsultaSQLFinanciador="SELECT * FROM Financiador WHERE idFinanciador='"+financiador+"'";
 
-                            } catch (SQLException ex) {
-                                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+                        Statement stf = cn.createStatement();
+                        ResultSet rsf = stf.executeQuery(ConsultaSQLFinanciador);                    
+
+                        if(rsf.next()){
+
+                           txtFinancieroP.setText(rsf.getString("nombreFinanciador"));
+                        } 
+
                     } 
+                    catch (SQLException ex) {
+                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } 
                         
              } catch (SQLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -187,14 +185,9 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
             int minuto = fechaActual.getMinutes();
             int segundo = fechaActual.getSeconds();
             
-            /*String prueba = hora+":"+minuto+":"+segundo;
-            System.out.println(prueba);*/
-            
             String fecha = anioactual+"-"+mesactual+"-"+diaactual+" "+hora+":"+minuto+":"+segundo;
-            
-            
+   
             pst.setString(8, fecha);
-            System.out.println(fecha);
             
             int n=pst.executeUpdate();
             if(n>0){
@@ -213,7 +206,6 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         double peso=0, talla=0;
         
         DecimalFormat df = new DecimalFormat("#.00");
-        //System.out.println(df.format(number));
         
         String mostrar="SELECT idPaciente, peso, talla FROM Historial";
              
@@ -239,7 +231,6 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
             txtPeso.setText(df.format(peso));
             txtTalla.setText(df.format(talla));
         }
-        System.out.println(cont+"  numero de id de pacientes repetidos");
     }
     
     
@@ -254,16 +245,16 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         String mostrar="SELECT idPaciente, idVisita FROM Historial";
              
         try {
-              Statement st = cn.createStatement();
-              ResultSet rs = st.executeQuery(mostrar);
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(mostrar);
               
-              while(rs.next())
-              {
-                  if(idPaciente == rs.getInt("idPaciente")){
-                      idVisitaCambiar = rs.getInt("idVisita");
-                      cont++;
-                  }
-              }
+            while(rs.next())
+            {
+                if(idPaciente == rs.getInt("idPaciente")){
+                    idVisitaCambiar = rs.getInt("idVisita");
+                    cont++;
+                }
+            }
 
         } catch (SQLException ex) {
             System.out.println("error en seleccionar  al verificar visita en historial: " + ex);
@@ -285,16 +276,16 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         String mostrar="SELECT idPaciente, idCama FROM Historial";
              
         try {
-              Statement st = cn.createStatement();
-              ResultSet rs = st.executeQuery(mostrar);
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(mostrar);
               
-              while(rs.next())
+            while(rs.next())
               {
-                  if(idPaciente == rs.getInt("idPaciente")){
-                      idCamaCambiar = rs.getInt("idCama");
-                      cont++;
-                  }
-              }
+                if(idPaciente == rs.getInt("idPaciente")){
+                    idCamaCambiar = rs.getInt("idCama");
+                    cont++;
+                }
+            }
 
         } catch (SQLException ex) {
             System.out.println("error en seleccionar historial: " + ex);
@@ -315,7 +306,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
                     System.out.println("error al MODIFICAR CAMA de entrada los datos: "+e);
             }
         }
-        System.out.println(cont+"-"+idCamaCambiar);
+
     }
     
     
@@ -784,8 +775,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cboPlantasKeyPressed
 
     private void cboPlantasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboPlantasMouseClicked
-        // TODO add your handling code here:
-        
+        // TODO add your handling code here:       
     }//GEN-LAST:event_cboPlantasMouseClicked
 
     private void cboPlantasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboPlantasMousePressed
@@ -796,7 +786,6 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         bucarPaciente();
         PesoTallaPaciente();
-
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void cboPlantasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboPlantasActionPerformed
@@ -840,16 +829,12 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnsbuscar2ActionPerformed
 
     private void btnGuardarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarHistorialActionPerformed
-
-        /*NO BORRES NADA PUPILO, LO COMENTADO SIRVE*/
-        
+      
         /*LLAMAMOS A LA FUNCION VERIFICAR VISITA, DONDE SI ESTAMO GUARDANDO AL MISMO PACIENTE MAS DE UNA VEZ
            ESTO SE GUARDARA CON EL MISMO IDVISITA*/
         
         VerificarVisita();
-        System.out.println(idVisitaCambiar);
-        System.out.println(valorVisita);
-        
+
         if(valorVisita==false){
             String sql="INSERT INTO Visita (estadoVisita,nroVisita) VALUES (?,?)";
             try {
