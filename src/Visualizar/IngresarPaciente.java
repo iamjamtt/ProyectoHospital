@@ -168,9 +168,7 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
     }
     
     void ingresar(){
-            String sql="";
-            
-            sql="INSERT INTO Paciente (dni,nombre,apellidoPaterno,apellidoMaterno,edad,sexo,fechaNacimiento,direccion,historiaClinica,idFinanciador) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            String sql="INSERT INTO Paciente (dni,nombre,apellidoPaterno,apellidoMaterno,edad,sexo,fechaNacimiento,direccion,historiaClinica,idFinanciador) VALUES (?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement pst  = cn.prepareStatement(sql);
             pst.setString(1, txtDNI.getText());
@@ -183,32 +181,30 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
                 int mes = dateNacimiento.getCalendar().get(Calendar.MARCH)+1;
                 String fecha = anio+"-"+mes+"-"+dia;
                 
-                        int anionace = dateNacimiento.getDate().getYear()+1900;
-                        int mesanace= dateNacimiento.getDate().getMonth() + 1;
-                        int dianace = dateNacimiento.getDate().getDay();
+                int anionace = dateNacimiento.getDate().getYear()+1900;
+                int mesanace= dateNacimiento.getDate().getMonth() + 1;
+                int dianace = dateNacimiento.getDate().getDay();
                         
-                        Date fechaActual = new Date();
-                        int anioactual = fechaActual.getYear()+1900;
-                        int mesactual = fechaActual.getMonth()+1;
-                        int diaactual = fechaActual.getDate();
+                Date fechaActual = new Date();
+                int anioactual = fechaActual.getYear()+1900;
+                int mesactual = fechaActual.getMonth()+1;
+                int diaactual = fechaActual.getDate();                       
                         
-                        
-                        int edad = 0;
-                        if(mesactual > mesanace){
-                            edad = anioactual - anionace;
-                        }
-                        else if(mesactual == mesanace){
-                            if(diaactual >= dianace){
-                                edad = anioactual - anionace;
-                            }
-                            else{
-                                edad = (anioactual - anionace) -1;
-                            }
-                        }
-                        else if(mesactual < mesanace){
-                            edad = (anioactual - anionace) -1;
-                        }                       
-                        //txtBuscarDNI.setText(Integer.toString(edad) + " años");
+                int edad = 0;
+                if(mesactual > mesanace){
+                    edad = anioactual - anionace;
+                }
+                else if(mesactual == mesanace){
+                    if(diaactual >= dianace){
+                        edad = anioactual - anionace;
+                    }
+                    else{
+                        edad = (anioactual - anionace) -1;
+                    }
+                }
+                else if(mesactual < mesanace){
+                    edad = (anioactual - anionace) -1;
+                }                       
                     
             pst.setInt(5, edad);
             pst.setString(6, cboSexo.getSelectedItem().toString());   
@@ -219,7 +215,7 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
             
             int n=pst.executeUpdate();
             if(n>0){
-            JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
+                JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
             }
             
             cargar2("");
@@ -241,31 +237,31 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
                 int mes = dateNacimiento.getCalendar().get(Calendar.MARCH)+1;
                 String fecha = año+"-"+mes+"-"+dia;
                 
-                        int anionace = dateNacimiento.getDate().getYear()+1900;
-                        int mesanace= dateNacimiento.getDate().getMonth() + 1;
-                        int dianace = dateNacimiento.getDate().getDay();
-                        
-                        Date fechaActual = new Date();
-                        int anioactual = fechaActual.getYear()+1900;
-                        int mesactual = fechaActual.getMonth()+1;
-                        int diaactual = fechaActual.getDate();
-                        
-                        
-                        int edad = 0;
-                        if(mesactual > mesanace){
-                            edad = anioactual - anionace;
-                        }
-                        else if(mesactual == mesanace){
-                            if(diaactual >= dianace){
-                                edad = anioactual - anionace;
-                            }
-                            else{
-                                edad = (anioactual - anionace) -1;
-                            }
-                        }
-                        else if(mesactual < mesanace){
-                            edad = (anioactual - anionace) -1;
-                        }         
+                int anionace = dateNacimiento.getDate().getYear()+1900;
+                int mesanace= dateNacimiento.getDate().getMonth() + 1;
+                int dianace = dateNacimiento.getDate().getDay();
+
+                Date fechaActual = new Date();
+                int anioactual = fechaActual.getYear()+1900;
+                int mesactual = fechaActual.getMonth()+1;
+                int diaactual = fechaActual.getDate();
+
+
+                int edad = 0;
+                if(mesactual > mesanace){
+                    edad = anioactual - anionace;
+                }
+                else if(mesactual == mesanace){
+                    if(diaactual >= dianace){
+                        edad = anioactual - anionace;
+                    }
+                    else{
+                        edad = (anioactual - anionace) -1;
+                    }
+                }
+                else if(mesactual < mesanace){
+                    edad = (anioactual - anionace) -1;
+                }         
                 
                 String direcionn = txtDireccion.getText();
                 int historiall = Integer.parseInt(txtHisClinica.getText());
@@ -689,30 +685,30 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
     private void tablaMostrarPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMostrarPacienteMouseClicked
         // TODO add your handling code here:
         String dni=(String) tablaMostrarPaciente.getValueAt(tablaMostrarPaciente.getSelectedRow(),0);
-            String mostrar;
-            try {
-                        String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
+        String mostrar;
+        try {
+            String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
 
-                        Statement st = cn.createStatement();
-                        ResultSet rs = st.executeQuery(ConsultaSQL);                    
-                     
-                        if(rs.next()){
-                            txtDNI.setText(rs.getString("dni"));
-                            txtNombre.setText(rs.getString("nombre"));
-                            txtPaterno.setText(rs.getString("apellidoPaterno"));
-                            txtMaterno.setText(rs.getString("apellidoMaterno"));
-                            dateNacimiento.setDate(rs.getDate("fechaNacimiento"));
-                            txtDireccion.setText(rs.getString("direccion"));
-                            cboSexo.setSelectedItem(rs.getString("sexo"));
-                            txtHisClinica.setText(rs.getString("historiaClinica"));
-                            cboFinanciador.setSelectedIndex(rs.getInt("idFinanciador"));
-                        } 
-                        desbloquear();
-                        btnModificar2();
-                        System.out.println("dd: " + dni);
-            } catch (Exception e) {
-                System.out.println("ERROR seleccionar datos: "+e.getMessage());
-            }
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(ConsultaSQL);                    
+
+            if(rs.next()){
+                txtDNI.setText(rs.getString("dni"));
+                txtNombre.setText(rs.getString("nombre"));
+                txtPaterno.setText(rs.getString("apellidoPaterno"));
+                txtMaterno.setText(rs.getString("apellidoMaterno"));
+                dateNacimiento.setDate(rs.getDate("fechaNacimiento"));
+                txtDireccion.setText(rs.getString("direccion"));
+                cboSexo.setSelectedItem(rs.getString("sexo"));
+                txtHisClinica.setText(rs.getString("historiaClinica"));
+                cboFinanciador.setSelectedIndex(rs.getInt("idFinanciador"));
+            } 
+            desbloquear();
+            btnModificar2();
+
+        } catch (Exception e) {
+            System.out.println("ERROR seleccionar datos: "+e.getMessage());
+        }
     }//GEN-LAST:event_tablaMostrarPacienteMouseClicked
 
     private void txtBuscarDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarDNIActionPerformed
