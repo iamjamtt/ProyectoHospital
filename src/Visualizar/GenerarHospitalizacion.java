@@ -181,14 +181,20 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
             Date fechaActual = new Date();
             int anioactual = fechaActual.getYear()+1900;
             int mesactual = fechaActual.getMonth()+1;
-            int diaactual = fechaActual.getDate();            
-            String fecha = anioactual+"-"+mesactual+"-"+diaactual;
+            int diaactual = fechaActual.getDate();
+
+            int hora = fechaActual.getHours();
+            int minuto = fechaActual.getMinutes();
+            int segundo = fechaActual.getSeconds();
             
-            System.out.println(fecha);
-            System.out.println(anioactual);
-            System.out.println(mesactual);
-            System.out.println(diaactual);
+            /*String prueba = hora+":"+minuto+":"+segundo;
+            System.out.println(prueba);*/
+            
+            String fecha = anioactual+"-"+mesactual+"-"+diaactual+" "+hora+":"+minuto+":"+segundo;
+            
+            
             pst.setString(8, fecha);
+            System.out.println(fecha);
             
             int n=pst.executeUpdate();
             if(n>0){

@@ -31,7 +31,9 @@ public class DetalleHistorial extends javax.swing.JInternalFrame {
     void cargar2(String valor){
         
         String mostrar="SELECT p.dni,m.nombre,c.idCama,h.peso,h.talla,d.descripcionD,h.fechaHistorial FROM Historial h INNER JOIN Paciente p ON h.idPaciente=p.idPaciente INNER JOIN Medico m ON h.idMedico=m.idMedico INNER JOIN Cama c ON h.idCama=c.idCama INNER JOIN Diagnostico d ON h.idDiagnostico=d.idDiagnostico WHERE p.dni LIKE '%"+valor+"%' OR m.nombre LIKE '%"+valor+"%'";
+
         String []titulos={"DNI. Paciente","Medico","Cod. Cama","Peso Paciente","Talla Paciente","Diagnostico Paciente","Fecha de Ingreso"};
+
         String []Registros=new String[7];
         model= new DefaultTableModel(null, titulos);
         try {
