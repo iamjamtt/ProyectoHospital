@@ -199,9 +199,7 @@ public class IngresarMedico extends javax.swing.JInternalFrame {
     }
     
     void ingresar(){
-            String sql="";
-            
-            sql="INSERT INTO Medico (dni,nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,condicion,estado,idCondicionLaboral,idEspecialidad,turno) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Medico (dni,nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,condicion,estado,idCondicionLaboral,idEspecialidad,turno) VALUES (?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement pst  = cn.prepareStatement(sql);
             pst.setString(1, txtDNI.getText());
@@ -271,17 +269,6 @@ public class IngresarMedico extends javax.swing.JInternalFrame {
                 System.out.println("error al modificar los datos: "+e);
             }    
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
