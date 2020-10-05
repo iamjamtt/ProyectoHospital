@@ -167,32 +167,7 @@ public class DetalleHistorial extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void tablaMostrarHistorialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMostrarHistorialMouseClicked
-        // TODO add your handling code here:
-        /*String dni=(String) tablaMostrarHistorial.getValueAt(tablaMostrarHistorial.getSelectedRow(),0);
-        String mostrar;
-        try {
-            String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
 
-            Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery(ConsultaSQL);
-
-            if(rs.next()){
-                txtDNI.setText(rs.getString("dni"));
-                txtNombre.setText(rs.getString("nombre"));
-                txtPaterno.setText(rs.getString("apellidoPaterno"));
-                txtMaterno.setText(rs.getString("apellidoMaterno"));
-                dateNacimiento.setDate(rs.getDate("fechaNacimiento"));
-                txtDireccion.setText(rs.getString("direccion"));
-                cboSexo.setSelectedItem(rs.getString("sexo"));
-                txtHisClinica.setText(rs.getString("historiaClinica"));
-                cboFinanciador.setSelectedIndex(rs.getInt("idFinanciador"));
-            }
-            desbloquear();
-            btnModificar2();
-            System.out.println("dd: " + dni);
-        } catch (Exception e) {
-            System.out.println("ERROR seleccionar datos: "+e.getMessage());
-        }*/
     }//GEN-LAST:event_tablaMostrarHistorialMouseClicked
 
     private void btnMostrarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarTodosActionPerformed
