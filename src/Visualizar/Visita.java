@@ -60,12 +60,12 @@ public class Visita extends javax.swing.JInternalFrame {
     void mostrarDatosCampos(){
             try {
                 if (!valida()){
-                    if(vr==true){
-                        JOptionPane.showMessageDialog(null, "Campo de DNI imcompleto");
+                    if(repetidoDNI==true){
+                        JOptionPane.showMessageDialog(null, "El DNI ingresado no existe.");
                         limpiar();
                     }else{
-                        if(repetidoDNI==true){
-                        JOptionPane.showMessageDialog(null, "El DNI ingresado no existe.");
+                        if(vr==true){
+                        JOptionPane.showMessageDialog(null, "Campo de DNI imcompleto");
                         limpiar();
                         }else{
                             if(campo=true){

@@ -38,6 +38,8 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         txtIDp1.setVisible(false);
         txtVisitanueva.setVisible(false);
         noEditable();
+        txtPeso.setEditable(false);
+        txtTalla.setEditable(false);
     }
 
     void cargarComboCama(){      
@@ -72,9 +74,67 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         }
     }    
       
+    public String detalleDNIM(){
+        String dni=txtDniM.getText();
+        String dniRepetido = null;
+            try {
+                     String ConsultaSQL="SELECT * FROM Medico WHERE dni='"+dni+"'";
+
+                     Statement st = cn.createStatement();
+                     ResultSet rs = st.executeQuery(ConsultaSQL);                    
+                     
+                     if(rs.next()){
+                        dniRepetido = rs.getString("dni");     
+                        System.out.println("dniRepetido: " + dniRepetido);
+                     } 
+                        
+             } catch (SQLException ex) {
+                 //Logger.getLogger(Laboral.class.getName()).log(Level.SEVERE, null, ex);
+             }
+        return dniRepetido;
+    }
+    
+    boolean vr2 = false;
+    boolean repetidoDNI2 = false;
+    boolean adddd2 = false;
+    boolean campo2 = false;
+    boolean valida2(){
+        if(txtDniM.getText().equals("")){
+            campo2 = true;
+            return false;
+        }
+        if(txtDniM.getText().length()<8){
+            vr2 = true;
+            return false;
+        }
+        if(detalleDNIM()== null){
+            repetidoDNI2 = true;
+            return false;
+        }else{
+            adddd2 = true;
+        }
+        return true;
+    }
     
     public void bucarMedico(){
-        String dni=txtDniM.getText();      
+        if (!valida2()){
+                    if(repetidoDNI2==true){
+                        JOptionPane.showMessageDialog(null, "El DNI ingresado no existe.");
+                        limpiarM();
+                    }else{
+                        if(vr2==true){
+                        JOptionPane.showMessageDialog(null, "Campo de DNI imcompleto");
+                        limpiarM();
+                        }else{
+                            if(campo2=true){
+                                JOptionPane.showMessageDialog(null, "Falta ingresar campos.");
+                                limpiarM();
+                            }
+                        }
+                    }
+                    
+        }else if(adddd2==true){ 
+            String dni=txtDniM.getText();      
             try {
                 String mostrar="SELECT m.idMedico,m.dni,m.nombre,m.apellidoPaterno,m.apellidoMaterno,e.descripcionE,m.turno FROM Medico m INNER JOIN Especialidad e ON m.idEspecialidad=e.idEspecialidad WHERE m.estado="+1+" AND m.condicion="+1+" AND m.dni='"+dni+"'";
 
@@ -91,47 +151,111 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
                     txtEspecialidad.setText(rs.getString("descripcionE"));
                 } 
                         
-             } catch (SQLException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-     
+    }
+    
+    public String detalleDNIP(){
+        String dni=txtDniP.getText();
+        String dniRepetido = null;
+            try {
+                     String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
+
+                     Statement st = cn.createStatement();
+                     ResultSet rs = st.executeQuery(ConsultaSQL);                    
+                     
+                     if(rs.next()){
+                        dniRepetido = rs.getString("dni");     
+                        System.out.println("dniRepetido: " + dniRepetido);
+                     } 
+                        
+             } catch (SQLException ex) {
+                 //Logger.getLogger(Laboral.class.getName()).log(Level.SEVERE, null, ex);
+             }
+        return dniRepetido;
+    }
+    
+    boolean vr = false;
+    boolean repetidoDNI = false;
+    boolean adddd = false;
+    boolean campo = false;
+    boolean valida(){
+        if(txtDniP.getText().equals("")){
+            campo = true;
+            return false;
+        }
+        if( txtDniP.getText().length()<8){
+            vr = true;
+            return false;
+        }
+        if(detalleDNIP()== null){
+            repetidoDNI = true;
+            return false;
+        }else{
+            adddd = true;
+        }
+        return true;
     }
     
     public void bucarPaciente(){
         String dni=txtDniP.getText();   
             try {
-                String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
-
-                Statement st = cn.createStatement();
-                ResultSet rs = st.executeQuery(ConsultaSQL);                    
-
-                if(rs.next()){
-
-                    String nombreC= rs.getString("nombre") +" " + rs.getString("apellidoPaterno") + " " + rs.getString("apellidoMaterno"); 
-                    txtDniP.setText(rs.getString("dni"));
-                    txtNombreP.setText(nombreC);
-                    txtIDp.setText(rs.getString("idPaciente"));
-                    txtHistoriaP.setText(rs.getString("historiaClinica"));
-                    System.out.println("hola: " + txtIDp.getText());
-                    int financiador = rs.getInt("idFinanciador");
-
-                    try {
-                        String ConsultaSQLFinanciador="SELECT * FROM Financiador WHERE idFinanciador='"+financiador+"'";
-
-                        Statement stf = cn.createStatement();
-                        ResultSet rsf = stf.executeQuery(ConsultaSQLFinanciador);                    
-
-                        if(rsf.next()){
-
-                           txtFinancieroP.setText(rsf.getString("nombreFinanciador"));
-                        } 
-
-                    } 
-                    catch (SQLException ex) {
-                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                if (!valida()){
+                    if(repetidoDNI==true){
+                        JOptionPane.showMessageDialog(null, "El DNI ingresado no existe.");
+                        limpiarP();
+                    }else{
+                        if(vr==true){
+                        JOptionPane.showMessageDialog(null, "Campo de DNI imcompleto");
+                        limpiarP();
+                        }else{
+                            if(campo=true){
+                                JOptionPane.showMessageDialog(null, "Falta ingresar campos.");
+                                limpiarP();
+                            }
+                        }
                     }
-                } 
-                        
+                    
+                }else if(adddd==true){ 
+                    txtPeso.setEditable(true);
+                    txtTalla.setEditable(true);
+                    
+                    String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
+
+                    Statement st = cn.createStatement();
+                    ResultSet rs = st.executeQuery(ConsultaSQL);                    
+
+                    if(rs.next()){
+
+                        String nombreC= rs.getString("nombre") +" " + rs.getString("apellidoPaterno") + " " + rs.getString("apellidoMaterno"); 
+                        txtDniP.setText(rs.getString("dni"));
+                        txtNombreP.setText(nombreC);
+                        txtIDp.setText(rs.getString("idPaciente"));
+                        txtHistoriaP.setText(rs.getString("historiaClinica"));
+                        System.out.println("hola: " + txtIDp.getText());
+                        int financiador = rs.getInt("idFinanciador");
+
+                        try {
+                            String ConsultaSQLFinanciador="SELECT * FROM Financiador WHERE idFinanciador='"+financiador+"'";
+
+                            Statement stf = cn.createStatement();
+                            ResultSet rsf = stf.executeQuery(ConsultaSQLFinanciador);                    
+
+                            if(rsf.next()){
+
+                               txtFinancieroP.setText(rsf.getString("nombreFinanciador"));
+                            } 
+
+                        } 
+                        catch (SQLException ex) {
+                                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } 
+
+                    PesoTallaPaciente();  
+                }
              } catch (SQLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -337,8 +461,25 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
         txtVisitanueva.setText("");
         cboCama.setSelectedIndex(-1);
         cboPlantas.setSelectedIndex(0);
-        cboDiagnostico.setSelectedIndex(0);
-        
+        cboDiagnostico.setSelectedIndex(0); 
+    }
+    
+    void limpiarP(){
+        txtDniP.setText("");
+        txtFinancieroP.setText("");
+        txtIDp.setText("");
+        txtNombreP.setText("");
+        txtPeso.setText("");
+        txtTalla.setText("");
+        txtHistoriaP.setText("");
+    }
+    
+    void limpiarM(){
+        txtDniM.setText("");
+        txtTurno.setText("");
+        txtIDp1.setText("");
+        txtNombreM.setText("");
+        txtEspecialidad.setText("");
     }
     
     /**
@@ -844,7 +985,6 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         bucarPaciente();
-        PesoTallaPaciente();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void cboPlantasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboPlantasActionPerformed
