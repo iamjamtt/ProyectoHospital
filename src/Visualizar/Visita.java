@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 
@@ -57,6 +59,23 @@ public class Visita extends javax.swing.JInternalFrame {
     int idVisita = 0;
     void mostrarDatosCampos(){
             try {
+                if (!valida()){
+                    if(vr==true){
+                        JOptionPane.showMessageDialog(null, "Campo de DNI imcompleto");
+                        limpiar();
+                    }else{
+                        if(repetidoDNI==true){
+                        JOptionPane.showMessageDialog(null, "El DNI ingresado no existe.");
+                        limpiar();
+                        }else{
+                            if(campo=true){
+                                JOptionPane.showMessageDialog(null, "Falta ingresar campos.");
+                                limpiar();
+                            }
+                        }
+                    }
+                    
+                }else if(adddd==true){  
                         String ConsultaSQL="SELECT h.idHistorial,h.fechaHistorial,h.idPaciente,h.idVisita,p.dni,p.nombre,p.apellidoPaterno,c.idCama,v.nroVisita FROM Historial h INNER JOIN Paciente p ON h.idPaciente=p.idPaciente INNER JOIN Cama c ON h.idCama=c.idCama INNER JOIN Visita v ON h.idVisita=v.idVisita WHERE h.idPaciente="+idPacientee+"";
 
                         Statement st = cn.createStatement();
@@ -75,7 +94,8 @@ public class Visita extends javax.swing.JInternalFrame {
                             }
                         } 
                         System.out.println("id P: "+ idPacientee);
-                        
+                        mostrarCupo();
+                }
             } catch (Exception e) {
                 System.out.println("ERROR seleccionar datos: "+e.getMessage());
             }
@@ -129,6 +149,47 @@ public class Visita extends javax.swing.JInternalFrame {
         txtNroHistorial.setEditable(false);
     }
     
+    public int detalleDNI(){
+        String dni=txtDniPaciente.getText();
+        int dniRepetido = 0;
+            try {
+                     String ConsultaSQL="SELECT p.dni,h.idPaciente FROM Historial h INNER JOIN Paciente p ON h.idPaciente=p.idPaciente WHERE p.dni='"+dni+"'";
+
+                     Statement st = cn.createStatement();
+                     ResultSet rs = st.executeQuery(ConsultaSQL);                    
+                     
+                     if(rs.next()){
+                       dniRepetido = rs.getInt("idPaciente");     
+                         System.out.println("dniRepetido: " + dniRepetido);
+                     } 
+                        
+             } catch (SQLException ex) {
+                 //Logger.getLogger(Laboral.class.getName()).log(Level.SEVERE, null, ex);
+             }
+        return dniRepetido;
+    }
+    
+    boolean vr = false;
+    boolean repetidoDNI = false;
+    boolean adddd = false;
+    boolean campo = false;
+    boolean valida(){
+        if(txtDniPaciente.getText().equals("")){
+            campo = true;
+            return false;
+        }
+        if( txtDniPaciente.getText().length()<8){
+            vr = true;
+            return false;
+        }
+        if(detalleDNI() == 0){
+            repetidoDNI = true;
+            return false;
+        }else{
+            adddd = true;
+        }
+        return true;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -392,7 +453,7 @@ public class Visita extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         obtenerIdPaciente();
         mostrarDatosCampos();
-        mostrarCupo();
+        txtDniPaciente.setText("");
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
