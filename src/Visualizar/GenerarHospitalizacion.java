@@ -318,7 +318,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
                 }
 
-                limpiar();
+                
 
             } catch (SQLException ex) {
                 System.out.println("Error al ingresar HISTORIAL datos: " + ex);
@@ -1079,7 +1079,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
                 System.out.println("error al MODIFICAR CAMA los datos: "+e);
         }
         
-        
+        limpiar();
     }//GEN-LAST:event_btnGuardarHistorialActionPerformed
 
     private void txtNombrePActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombrePActionPerformed
