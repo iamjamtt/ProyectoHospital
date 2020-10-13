@@ -245,13 +245,13 @@
                               <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtNroHistorial" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="txtNroCAMA" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="txtFechaIngre" alignment="1" max="32767" attributes="0"/>
                               <Component id="txtCantVisita" alignment="1" max="32767" attributes="0"/>
                               <Component id="txtNombreP" alignment="1" max="32767" attributes="0"/>
                               <Component id="txtDNIpaciente" alignment="1" max="32767" attributes="0"/>
+                              <Component id="txtNroHistorial" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>

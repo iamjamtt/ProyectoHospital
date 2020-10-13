@@ -325,13 +325,13 @@ public class Visita extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNroHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNroCAMA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFechaIngre)
-                    .addComponent(txtCantVisita)
-                    .addComponent(txtNombreP)
-                    .addComponent(txtDNIpaciente))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNroCAMA, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFechaIngre, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtCantVisita, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtNombreP, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtDNIpaciente, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtNroHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -435,6 +435,7 @@ public class Visita extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
+        spinerVisita.setEnabled(true);
         obtenerIdPaciente();
         mostrarDatosCampos();
         txtDniPaciente.setText("");
