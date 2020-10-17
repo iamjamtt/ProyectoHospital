@@ -754,7 +754,6 @@ public class IngresarPaciente extends javax.swing.JInternalFrame {
     private void tablaMostrarPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMostrarPacienteMouseClicked
         // TODO add your handling code here:
         String dni=(String) tablaMostrarPaciente.getValueAt(tablaMostrarPaciente.getSelectedRow(),0);
-        String mostrar;
         try {
             String ConsultaSQL="SELECT * FROM Paciente WHERE dni='"+dni+"'";
 
