@@ -1047,7 +1047,7 @@ public class GenerarHospitalizacion extends javax.swing.JInternalFrame {
                 System.out.println("Error al ingresar VISITA datos: " + ex);
             }
 
-            String Consul = "SELECT idVisita FROM Visita WHERE idVisita = (SELECT MAX(idVisita ) FROM Visita)";
+            String Consul = "SELECT idVisita FROM Visita WHERE idVisita = (SELECT MAX(idVisita) FROM Visita)";
             try {   
                 Statement st = cn.createStatement();
                 ResultSet rs = st.executeQuery(Consul);
